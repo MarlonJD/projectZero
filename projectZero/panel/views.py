@@ -14,3 +14,8 @@ def distView(request):
     distsObj = Album.objects.filter(artist=artistObj).order_by('-releaseDate')
     params = {'dists': distsObj}
     return render(request, 'panel/distribution.html', params)
+
+
+@login_required
+def adddistUserView(request):
+    return render(request, 'panel/addDist.html')

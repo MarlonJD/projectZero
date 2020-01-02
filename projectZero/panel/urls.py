@@ -5,5 +5,6 @@ app_name = 'panel'
 
 urlpatterns = [
     path('', views.indexView, name='index'),
-    path('distribution', views.distView, name='distribution')
+    path('distribution', views.distView, name='distribution'),
+    path('addDist', views.adddistUserView, name='addDist')
 ]
