@@ -19,7 +19,8 @@ RecordLabel, Track, Album
 #         appleArtist, spotifyArtist is the URL
 class Artist(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE,
+                             related_name='artist_set')
     name = models.CharField(max_length=100, null=True)
     appleArtist = models.URLField(null=True)
     spotifyArtist = models.URLField(null=True)
