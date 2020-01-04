@@ -69,6 +69,7 @@ class RecordLabel(models.Model):
 #         media is the FILE
 #         otherArtists is OtherArtist for split paying
 class Track(models.Model):
+    number = models.IntegerField()
     name = models.CharField(max_length=150)
     media = models.FileField(upload_to='media')
     OtherArtists = models.ManyToManyField(OtherArtist,

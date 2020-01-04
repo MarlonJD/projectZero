@@ -55,8 +55,69 @@
 		</div>
 
 		<div v-if="step === 1">
+		    <div class="card mb-4">
+			<div class="card-body">
+			    <h5 class="card-title">Tracks
+				<a href="#" v-b-modal.modal-prevent-closing class="btn btn-sm btn-gradient-info float-right">
+				    <i class="mdi mdi-plus"></i>Add Track
+				</a>
+			    </h5>
+			    <h6 class="card-subtitle mb-2 text-muted">Please add your tracks</h6>
+			    <div v-if="filesLoad.length > 0">
+				<b-table striped hover :items="filesLoad"></b-table>
+			    </div>
+			    <div v-else>
+				<div class="alert alert-warning" role="alert">
+				    {% trans 'Any tracks here yet. Please add any track with button' %}
+				</div>
+			    </div>
+			    
+			</div>
+		    </div>
+
+		    <b-modal
+			id="modal-prevent-closing"
+			ref="modal"
+			title="Add Track"
+			@show="resetModal"
+			@hidden="resetModal"
+			    @ok="handleOk"
+		    >
+			<form ref="form" @submit.stop.prevent="handleSubmit">
+			    <div class="form-group">
+				<label for="number">Track Number</label>
+				<input type="number" class="form-control" id="number" name="number" aria-describedby="numberHelp">
+				<small id="numberHelp" class="form-text text-muted">This is the album track number</small>
+			    </div>
+			    <div class="form-group">
+				<label for="name">Track Title</label>
+				<input type="text" class="form-control" id="name" name="name">
+			    </div>
+
+			    <div class="form-group">
+				<label for="name">Media File</label>
+				<b-form-file
+				    lang="{% get_current_language as LANG_CODE %}{{LANG_CODE}}"
+				    id="media"
+				    name="media"
+				    v-model="files"
+				    placeholder="{% trans 'Choose...' %}"
+				    drop-placeholder="{% trans 'Drop file here...' %}"
+				    accept="audio/*, video/*"
+				    multiple>
+				    <template slot="file-name" slot-scope="{ names }">
+					<b-badge>[[ names[0] ]]</b-badge>
+					<b-badge v-if="names.length > 1" class="ml-1">
+					    + [[ names.length - 1 ]] {% trans 'More files' %}
+					</b-badge>
+				    </template>
+				</b-form-file>
+			    </div>
+			</form>
+		    </b-modal>
 		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
 		</div>
+		
 		<div v-if="step === 2">
 		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">Previous</button>
 		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
@@ -92,9 +153,15 @@
 	 error2: false,
 	 error3: false,
 	 error4: false,
+	 files: null,
+	 filesLoading: [],
+	 filesLoad: [],
+	 name: '',
+         nameState: null,
+         submittedNames: [],
      },
      mounted() {
-	 this.getItems();
+	 
      },
      methods: {
 	 prev() {
@@ -102,6 +169,54 @@
 	 },
 	 next() {
 	     this.step++;
+	 },
+	 checkFormValidity() {
+             const valid = this.$refs.form.checkValidity()
+             this.nameState = valid ? 'valid' : 'invalid'
+             return valid
+	 },
+	 resetModal() {
+             this.name = ''
+             this.nameState = null
+	 },
+	 handleOk(bvModalEvt) {
+             // Prevent modal from closing
+             bvModalEvt.preventDefault()
+             // Trigger submit handler
+             this.handleSubmit()
+	 },
+	 handleSubmit() {
+             // Exit when the form isn't valid
+             if (!this.checkFormValidity()) {
+		 return
+             }
+             // Push the name to submitted names
+
+	     this.filesLoading = []
+
+	     var form = this.$refs["form"]
+	     var formData = new FormData(form);
+	     
+	     axios
+		 .post('/trackUpload',formData,{
+		     headers: {
+			 'Content-Type': 'multipart/form-data'
+		     }
+		 })
+		 .then(response => {
+		     console.log(JSON.stringify(response.data));
+		     this.filesLoad.push(response.data);
+		     this.makeToast('success', 'Success', "File successfully uploaded");
+		 })
+		 .catch(error => {
+		     console.log(error)
+		     this.makeToast('danger', 'Error', error.response.data.Message);
+		     return false
+		 })
+             // Hide the modal manually
+             this.$nextTick(() => {
+		 this.$refs.modal.hide()
+             })
 	 },
      },
      computed: {
