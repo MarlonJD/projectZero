@@ -107,12 +107,33 @@
 				    multiple>
 				    <template slot="file-name" slot-scope="{ names }">
 					<b-badge>[[ names[0] ]]</b-badge>
-					<b-badge v-if="names.length > 1" class="ml-1">
-					    + [[ names.length - 1 ]] {% trans 'More files' %}
+													<b-badge v-if="names.length > 1" class="ml-1">
+													+ [[ names.length - 1 ]] {% trans 'More files' %}
 					</b-badge>
 				    </template>
 				</b-form-file>
+												    </div>
+
+			    <div class="form-group">
+				<label for="name">Split Pay</label>
+				<table class="table col">
+				    <tbody>
+					<tr v-for="(row, index) in rows">
+					    <td><b-form-input id="input-small" size="sm" v-model="row.email" placeholder="Email"></b-form-input></td>
+					    <td><b-form-input id="input-small" size="sm" v-model="row.rate" min=1 max=100 type="number" placeholder="Rate"></b-form-input></td>
+					    <td>
+						<a class="btn btn-info text-white btn-sm" @click="removeElement(index);" style="cursor: pointer">
+						    <i class="mdi mdi-playlist-remove"></i>
+						</a>
+						<a class="btn btn-info text-white btn-sm" @click="addRow" style="cursor: pointer">
+						    <i class="mdi mdi-plus"></i>
+						</a>
+					    </td>
+					</tr>
+				    </tbody>
+				</table>
 			    </div>
+
 			</form>
 		    </b-modal>
 		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
@@ -159,6 +180,12 @@
 	 name: '',
          nameState: null,
          submittedNames: [],
+	 rows: [
+	     {
+		 email: null,
+		 rate: null,
+	     }
+	 ],
      },
      mounted() {
 	 
@@ -178,6 +205,12 @@
 	 resetModal() {
              this.name = ''
              this.nameState = null
+	     this.rows = [
+		 {
+		     email: null,
+		     rate: null,
+		 }
+	     ]
 	 },
 	 handleOk(bvModalEvt) {
              // Prevent modal from closing
@@ -218,6 +251,19 @@
 		 this.$refs.modal.hide()
              })
 	 },
+	 addRow: function() {
+             var elem = document.createElement('tr');
+	     
+             this.rows.push({
+                 email: "",
+		 rate: 0,
+             });
+         },
+         removeElement: function(index) {
+	     if (this.rows.length > 1) {
+		 this.rows.splice(index, 1);
+	     }
+         },
      },
      computed: {
 	 filteredItems() {
