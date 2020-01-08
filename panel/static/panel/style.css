@@ -1,0 +1,17 @@
+.page-item.active .page-link {
+    background-color: #b66dff !important;
+    border-color: #b66dff;
+}
+
+.mdi-2x {
+    font-size: 1.7em !important;
+}
+
+.nav-item a {
+    color: #b66dff;
+}
+
+.nav-tabs .nav-link.active {
+    color: #b66dff !important;
+    font-weight: 700 !important;
+}
