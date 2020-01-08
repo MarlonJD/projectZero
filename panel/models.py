@@ -12,7 +12,7 @@ RecordLabel, Track, Album
 '''
 
 
-# Artist is Artist(name=String)
+# Artist is Artist(user=request.user, name=String)
 # interp. Main Artist of the media
 #         user is User as artist's usership
 #         name is the main artist name of media       String
@@ -76,11 +76,10 @@ class Track(models.Model):
                                           related_name='otherArtists_set')
 
 
-# Album is Album(title=String, artist=Artist,
+# Album is Album(mediaType=mediaType, title=String, artist=Artist,
 #                genre=String, subgenre=String,
-#                appleArtist=URL, spotifyArtist=URL,
 #                recordLabel=String, releaseDate=Date,
-#                partners=Partner, OtherArtists=OtherArtist)
+#                platforms=Platform)
 # interp. Album ia music or music video or any media
 #         mediaType is MediaType Choices
 #         tracks is Track list

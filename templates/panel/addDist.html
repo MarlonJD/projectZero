@@ -75,11 +75,11 @@
 
 		    <b-modal
 			id="modal-prevent-closing"
-			    ref="modal"
-			    title="Add Track"
-			    @show="resetModal"
-			    @hidden="resetModal"
-			@ok="handleOk"
+			ref="modal"
+			title="Add Track"
+			@show="resetModal"
+			@hidden="resetModal"
+			    @ok="handleOk"
 		    >
 			<form ref="form" @submit.stop.prevent="handleSubmit">
 			    <div class="form-group">
@@ -138,40 +138,60 @@
 		</div>
 		
 		<div v-if="step === 2">
-		    <div class="card mb-4">
+		    <div class="card mb-2">
 			<div class="card-body">
 			    <h5 class="card-title">Distribution Details
 			    </h5>
-			    <h6 class="card-subtitle mb-4 text-muted">Please fill the form</h6>
+			    <h6 class="card-subtitle text-muted">Please fill the form</h6>
 			    <form class="row">
-				<div class="form-group col-12">
+				<div class="form-group col-6">
 				    <label for="exampleInputEmail1">Media Type</label>
-				    <b-form-select v-model="mediaType" :options="mediaTypeOptions"></b-form-select>
+				    <b-form-select v-model="media.type" :options="mediaTypeOptions"></b-form-select>
 				    <small id="emailHelp" class="form-text text-muted">Select media type ie. Single, EP, Album</small>
 				</div>
 				<div class="form-group col-6">
+				    <div class="form-group">
+					<label for="name">[[ selectText ]] Cover</label>
+					<b-form-file
+					    lang="{% get_current_language as LANG_CODE %}{{LANG_CODE}}"
+					    v-model="media.cover"
+					    name="cover"
+					    @change="onFileChange"
+					    placeholder="{% trans 'Choose...' %}"
+					    drop-placeholder="{% trans 'Drop file here...' %}"
+					    accept="image/*">
+					    <template slot="file-name" slot-scope="{ names }">
+						<b-badge>[[ names[0] ]]</b-badge>
+						<b-badge v-if="names.length > 1" class="ml-1">
+						    + [[ names.length - 1 ]] {% trans 'More files' %}
+						</b-badge>
+					    </template>
+					</b-form-file>
+				    </div>
+				</div>
+				<div class="form-group col-6">
 				    <label for="mediaTitle">Title</label>
-				    <b-form-input v-model="mediaTitle" :placeholder="'Your ' + selectText  + 'title'"></b-form-input>
+				    <b-form-input v-model="media.title" :placeholder="'Your ' + selectText  + 'title'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaTitle">Artist Name</label>
-				    <b-form-input v-model="mediaArtist" placeholder="Main Artist Name"></b-form-input>
+				    <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaGenre">Genre</label>
-				    <b-form-input v-model="mediaGenre" placeholder="Genre"></b-form-input>
+				    <b-form-input v-model="media.genre" placeholder="Genre"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaSubGenre">Subgenre</label>
-				    <b-form-input v-model="mediaSubGenre" placeholder="Subgenre"></b-form-input>
+				    <b-form-input v-model="media.subGenre" placeholder="Subgenre"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaRecordLabel">Record Label</label>
-				    <b-form-input v-model="mediaRecordLabel" :placeholder="selectText + 'Record Label'"></b-form-input>
+				    <b-form-input v-model="media.recordLabel" :placeholder="selectText + 'Record Label'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaReleaseDate">Release Date</label>
-				    <b-form-input type="date" v-model="mediaReleaseDate" :placeholder="'Select date when you want to release ' + selectText"></b-form-input>
+				    <b-form-input type="date" v-model="media.releaseDate" :placeholder="'Select date when you want to release ' + selectText"></b-form-input>
 				</div>
 			    </form>
 			</div>
@@ -185,11 +205,11 @@
 			<div class="card-body">
 			    <h5 class="card-title">Platforms
 			    </h5>
-			    <h6 class="card-subtitle mb-2 text-muted">Select which platforms that you want to release your [[ selectText ]]</h6>
+			    <h6 class="card-subtitle mb-2 text-muted">Select which platforms that you want to release <span v-if="selectText">your [[ selectText ]]</span></h6>
 			    
 			    <b-form-group>
 				<div class="row pl-3 pt-2">
-				    <b-form-checkbox v-model="mediaPlatforms"
+				    <b-form-checkbox v-model="media.platforms"
 						     v-for="(platform, index) in mediaPlatformsOptions"
 						     class="col-3"
 						     :value="platform.value"
@@ -202,7 +222,7 @@
 			    <b-form-group>
 				<div class="row pl-3 pt-2">
 				    <b-form-checkbox class="col-3"
-						     v-model="mediaFeaturedPlatforms"
+						     v-model="media.featuredPlatforms"
 						     v-for="(platform, index) in mediaFeaturedPlatformsOptions"
 						     :value="platform.value"
 						     switch>[[ platform.text ]]
@@ -218,27 +238,44 @@
 		<div v-if="step === 4">
 		    <div class="card mb-4">
 			<div class="card-body">
-			    <h5 class="card-title">Tracks
-				<a href="#" v-b-modal.modal-prevent-closing class="btn btn-sm btn-gradient-info float-right">
-				    <i class="mdi mdi-plus"></i>Add Track
-				</a>
+			    <h5 class="card-title">Preview
 			    </h5>
-			    <h6 class="card-subtitle mb-2 text-muted">Please add your tracks</h6>
-			    <div v-if="filesLoad.length > 0">
-				<b-table striped hover :items="filesLoad"></b-table>
-			    </div>
-			    <div v-else>
-				<div class="alert alert-warning" role="alert">
-				    {% trans 'Any tracks here yet. Please add any track with button' %}
-				</div>
-			    </div>
+			    <b-row>
+				<b-col cols="2">
+				    <b-card-img :src="coverUrl" class="rounded-0" style="max-width: 13rem;"></b-card-img>				    
+				</b-col>
+				<b-col cols="4">
+				    <h5>[[ media.title ]]</h5>
+				    <h6 class="text-muted">[[ media.artist ]]</h6>
+				    <b-list-group flush>
+					<br>Label:  [[media.recordLabel]]</br>
+					<br>Genre: [[media.genre]] [[media.subGenre]]</br>
+					<br>Release: [[ media.releaseDate ]]</br>
+					<br>Type: [[ selectText ]]</br>
+					<br>Platforms: [[ platformsText ]]</br>
+				    </b-list-group>
+				</b-col>
+				<b-col cols="6">
+				    <h6>Tracks</h6>
+				    <div v-if="filesLoad.length > 0">
+					<b-table striped hover :items="filesLoad" :fields="filesFields"></b-table>
+				    </div>
+				    <div v-else>
+					<div class="alert alert-warning" role="alert">
+					    {% trans 'Any tracks here yet. Please add any track with button' %}
+					</div>
+				    </div>
+				</b-col>
+			    </b-row>
+			    
 			    
 			</div>
 		    </div>
 		    
 		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">Previous</button>
-		    <button class="float-right btn-lg btn-gradient-success" @click.prevent="submit()">Save</button>
+		    <button class="float-right btn-lg btn-gradient-success" @click="submitForm">Save</button>
 		</div>
+
             </div>
         </div>
     </div>
@@ -265,61 +302,40 @@
 	 files: null,
 	 filesLoading: [],
 	 filesLoad: [],
+	 filesFields: ['number', 'name', 'size'],
 	 name: '',
          nameState: null,
          submittedNames: [],
+	 coverUrl: null,
 	 rows: [
 	     {
 		 email: null,
 		 rate: null,
 	     }
 	 ],
-	 mediaType: null,
+	 media: {
+	     type: null,
+	     cover: null,
+	     title: null,
+	     artist: null,
+	     genre: null,
+	     subGenre: null,
+	     recordLabel: null,
+	     releaseDate: null,
+	     platforms:  [],
+	     featuredPlatforms: [],
+	 }, 
          mediaTypeOptions: [
-             { value: null, text: 'Please select an option', disabled: true },
-             { value: 0, text: '{% trans 'Single'|escapejs %}' },
-             { value: 1, text: '{% trans 'EP'|escapejs %}' },
-             { value: 2, text: '{% trans 'Album'|escapejs %}' }
-         ],
-	 mediaTitle: null,
-	 mediaArtist: null,
-	 mediaGenre: null,
-	 mediaSubGenre: null,
-	 mediaRecordLabel: null,
-	 mediaReleaseDate: null,
-	 mediaPlatforms:  [],
+	     { value: null, text: 'Please select an option', disabled: true },
+	     { value: 0, text: '{% trans 'Single'|escapejs %}' },
+	     { value: 1, text: '{% trans 'EP'|escapejs %}' },
+	     { value: 2, text: '{% trans 'Album'|escapejs %}' }
+         ],	 
 	 mediaPlatformsOptions: [
-             { value: 0, text:  'Alibaba' },
-             { value: 1, text:  'Amazon' },
-	     { value: 2, text:  'Anghami' },
-	     { value: 3, text:  'Apple Music' },
-	     { value: 4, text:  'Audiomack' },
-	     { value: 5, text:  'Beatport' },
-	     { value: 6, text:  'Deezer' },
-	     { value: 7, text:  'Dubset' },
-	     { value: 8, text:  'Facebook/Instagram' },
-	     { value: 9, text:  'Google Play' },
-	     { value: 10, text:  'iHeartRadio' },
-	     { value: 11, text:  'MelonPlus' },
-	     { value: 12, text:  'MixCloud' },
-	     { value: 13, text:  'Napster' },
-	     { value: 14, text:  'Netease' },
-	     { value: 15, text:  'Pandora Plus' },
-	     { value: 16, text:  'Play Network' },
-	     { value: 17, text:  'Saavn' },
-	     { value: 18, text:  'Shazam' },
-	     { value: 19, text:  'Soundcould' },
-	     { value: 20, text:  'Sound Exchange' },
-	     { value: 21, text:  'Spotify' },
-	     { value: 22, text:  'Tencent' },
-	     { value: 23, text:  'Tesla' },
-	     { value: 24, text:  'Tidal' },
-	     { value: 25, text:  'TikTok' },
-	     { value: 26, text:  'VK' },
-	     { value: 27, text:  'Yandex' },
-	     { value: 28, text:  'Youtube Music' },
+	     {% for platform in platforms %}
+	     { value:{{ platform.id|escapejs }}, text:'{{ platform.name|escapejs }}' },
+	     {% endfor %}
          ],
-	 mediaFeaturedPlatforms: [],
 	 mediaFeaturedPlatformsOptions: [
 	     { value: 0, text:  'iTunes' },
              { value: 1, text:  'Spotify' },
@@ -364,7 +380,6 @@
              // Push the name to submitted names
 
 	     this.filesLoading = []
-
 	     var form = this.$refs["form"]
 	     var formData = new FormData(form);
 	     
@@ -402,6 +417,39 @@
 		 this.rows.splice(index, 1);
 	     }
 	 },
+	 onFileChange(e) {
+	     const file = e.target.files[0];
+	     this.coverUrl = URL.createObjectURL(file);
+	 },
+	 submitForm(){
+             let formData0 = new FormData();
+             formData0.append('cover', this.media.cover);
+	     formData0.append('mType', this.media.type);
+	     formData0.append('title', this.media.title);
+	     formData0.append('artist', this.media.artist);
+	     formData0.append('genre', this.media.genre);
+	     formData0.append('subGenre', this.media.subGenre);
+	     formData0.append('recordLabel', this.media.recordLabel);
+	     formData0.append('releaseDate', this.media.releaseDate);
+	     formData0.append('tracks', JSON.stringify(this.filesLoad));
+	     formData0.append('platforms', JSON.stringify(this.media.platforms));
+	     axios
+		 .post('/addDist',
+		       formData0,
+		       {
+			   headers: {
+			       'Content-Type': 'multipart/form-data'
+			   }
+		       })
+		 .then(function(){
+		     console.log('SUCCESS!!');
+		     window.location.href = '{% url 'panel:distribution' %}'
+		 })
+		 .catch(function(){
+		     console.log('FAILURE!!');
+		     this.makeToast('danger', 'Error', error.response.data.Message);
+		 });
+	 },
      },
      computed: {
 	 filteredItems() {
@@ -410,12 +458,20 @@
 	     })
 	 },
 	 selectText(){
-	     if (this.mediaType != null) {
-      		 return this.mediaTypeOptions[this.mediaType + 1].text + ' '
+	     if (this.media.type != null) {
+      		 return this.mediaTypeOptions[this.media.type + 1].text + ' '
 	     }
 	     else {
 		 return '';
 	     }
+	 },
+	 platformsText(){
+	     returnVal = '';
+	     for (i=0; i < this.media.platforms.length; i++) {
+      		 returnVal += this.mediaPlatformsOptions[this.media.platforms[i]].text;
+		 if(i < this.media.platforms.length - 1){ returnVal += ", ";}
+	     }
+	     return returnVal;
 	 }
      },
  })

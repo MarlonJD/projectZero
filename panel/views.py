@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Album, Artist, Track
+from .models import Album, Artist, Track, Platform
 import json
 
 
@@ -20,7 +20,45 @@ def distView(request):
 
 @login_required
 def adddistUserView(request):
-    return render(request, 'panel/addDist.html')
+    if request.method == 'POST':
+        try:
+            mType = request.POST['mType']
+            title = request.POST['title']
+            artist = request.POST['artist']
+            genre = request.POST['genre']
+            subGenre = request.POST['subGenre']
+            recordLabel = request.POST['recordLabel']
+            releaseDate = request.POST['releaseDate']
+            cover = request.FILES['cover']
+            tracks = json.loads(request.POST['tracks'])
+            platforms = json.loads(request.POST['platforms'])
+
+            artistObj = Artist.objects.get_or_create(user=request.user,
+                                                     name=artist)[0]
+        
+            albumObj = Album.objects.create(mediaType=mType,
+                                            title=title,
+                                            artwork=cover,
+                                            artist=artistObj,
+                                            genre=genre,
+                                            subgenre=subGenre,
+                                            recordLabel=recordLabel,
+                                            releaseDate=releaseDate)
+
+            for val in platforms:
+                print(val)
+                platObj = Platform.objects.get(pk=val)
+                albumObj.platforms.add(platObj)
+                
+            for val in tracks:
+                trackObj = Track.objects.get(pk=val['id'])
+                albumObj.tracks.add(trackObj)
+                
+            return JsonResponse({"success": 1}, status=200)
+        except:
+            JsonResponse({"Message": "Couldn't add distribution for some reason"}, status=418)
+    else:
+        return render(request, 'panel/addDist.html', {'platforms': Platform.objects.all})
 
 
 @login_required
