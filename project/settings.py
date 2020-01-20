@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'panel.apps.PanelConfig'
 ]
 
@@ -121,3 +122,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/login/'
+
+# Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

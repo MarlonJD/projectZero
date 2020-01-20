@@ -134,9 +134,12 @@ class ContentID(models.Model):
         RECIEVED = 1, _('Removal Request Received')
         __empty__ = _('Please Select...')
 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             null=True)
     title = models.CharField(max_length=200)
     url = models.URLField()
-    status = models.IntegerField(choices=statusType.choices)
+    status = models.IntegerField(choices=statusType.choices, default=0)
 
 
 '''
@@ -156,8 +159,10 @@ class ContentID(models.Model):
 #         stream is the stream count of media on that platform
 #         revenue is the money comes from platform
 class Statistic(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
     stream = models.IntegerField()
     download = models.IntegerField()
     revenue = models.IntegerField()
+    date = models.DateField()

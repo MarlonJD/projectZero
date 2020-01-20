@@ -17,37 +17,37 @@
       </a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/">
+	<a class="nav-link" href="{% url 'panel:index' %}">
             <span class="menu-title">{% trans 'Dashboard' %}</span>
             <i class="mdi mdi-home menu-icon"></i>
 	</a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/distribution">
+	<a class="nav-link" href="{% url 'panel:distribution' %}">
             <span class="menu-title">{% trans 'Distribution' %}</span>
             <i class=" mdi mdi-library-music menu-icon"></i>
 	</a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/user">
+	<a class="nav-link" href="">
             <span class="menu-title">{% trans 'User' %}</span>
             <i class="mdi mdi-account-multiple menu-icon"></i>
 	</a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/user">
+	<a class="nav-link" href="{% url 'panel:contentID' %}">
             <span class="menu-title">{% trans 'Content ID' %}</span>
             <i class="mdi mdi-youtube menu-icon"></i>
 	</a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/statistic">
+	<a class="nav-link" href="">
             <span class="menu-title">{% trans 'Statistic' %}</span>
             <i class="mdi mdi-chart-areaspline menu-icon"></i>
 	</a>
     </li>
     <li class="nav-item">
-	<a class="nav-link" href="/">
+	<a class="nav-link" href="">
             <span class="menu-title">{% trans 'Statements' %}</span>
             <i class="mdi mdi-bank menu-icon"></i>
 	</a>

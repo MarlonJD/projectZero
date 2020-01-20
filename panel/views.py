@@ -1,25 +1,42 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Album, Artist, Track, Platform
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, TemplateView
+from .models import (Album, Artist, Track, Platform,
+                     ContentID)
 import json
 
 
-@login_required
-def indexView(request):
-    return render(request, 'panel/index.html')
+class indexUserTemplateView(LoginRequiredMixin, TemplateView):
+    '''
+    Panel Home Page (Dashboard) Page Class View
+    '''
+    template_name = "panel/index.html"
+
+
+class distUserListView(LoginRequiredMixin, ListView):
+    '''
+    Panel, Distribution Page Class Based View: ListView
+    '''
+    model = Album
+    template_name = 'panel/distribution.html'
+    # paginate_by = 50
+
+    def get_queryset(self):
+        try:
+            artistObj = Artist.objects.get(user=self.request.user)
+        except Artist.DoesNotExist:
+            artistObj = None
+        return Album.objects.filter(artist=artistObj).order_by('-releaseDate')
 
 
 @login_required
-def distView(request):
-    artistObj = Artist.objects.get(user=request.user)
-    distsObj = Album.objects.filter(artist=artistObj).order_by('-releaseDate')
-    params = {'dists': distsObj}
-    return render(request, 'panel/distribution.html', params)
-
-
-@login_required
-def adddistUserView(request):
+def addDistUserView(request):
+    '''
+    Panel, Add Distribution Page: Main Function View
+    '''
     if request.method == 'POST':
         try:
             mType = request.POST['mType']
@@ -35,7 +52,7 @@ def adddistUserView(request):
 
             artistObj = Artist.objects.get_or_create(user=request.user,
                                                      name=artist)[0]
-        
+
             albumObj = Album.objects.create(mediaType=mType,
                                             title=title,
                                             artwork=cover,
@@ -58,12 +75,20 @@ def adddistUserView(request):
         except:
             JsonResponse({"Message": "Couldn't add distribution for some reason"}, status=418)
     else:
-        return render(request, 'panel/addDist.html', {'platforms': Platform.objects.all})
+        try:
+            artistObj = Artist.objects.get(user=request.user)
+        except Artist.DoesNotExist:
+            artistObj = None
+        
+        return render(request, 'panel/addDist.html', {'platforms': Platform.objects.all,
+                                                      'artist': artistObj})
 
 
 @login_required
-# Distribution Track Add: Media Uploader
-def trackUpload(request):
+def trackUploadUser(request):
+    '''
+    Panel, Add Distribution Page: Media (Track) Uploader Helper Function
+    '''
     try:
         number = request.POST['number']
         name = request.POST['name']
@@ -81,3 +106,30 @@ def trackUpload(request):
         return JsonResponse({
             "FailedCode": 0,
             "Message": "Couldn't upload media for some reason"}, status=418)
+
+
+class contentIDUserListView(LoginRequiredMixin, ListView):
+    '''
+    Panel, ContentID Page Class Based View: ListView
+    '''
+    template_name = 'panel/contentID.html'
+    model = ContentID
+    # paginate_by = 50
+    context_object_name = 'list'
+
+    def get_queryset(self):
+        return ContentID.objects.filter(user=self.request.user)
+
+
+class contentIDUserRequestCreateView(LoginRequiredMixin, CreateView):
+    '''
+    Panel, ContentID Request Page Class View
+    '''
+    success_url = reverse_lazy('panel:contentID')
+    template_name = 'panel/contentIDRequest.html'
+    model = ContentID
+    fields = ('title', 'url')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(contentIDUserRequestCreateView, self).form_valid(form)

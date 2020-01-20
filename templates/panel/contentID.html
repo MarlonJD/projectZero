@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:addDist' %}"><i class="mdi mdi-plus"></i>New Distribution</a>
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:contentIDRequest' %}"><i class="mdi mdi-plus"></i>New Request</a>
             </li>
         </ul>
     </nav>
@@ -22,29 +22,23 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Your Distributions</h4>
-                <p class="card-description"> All distirbutions is here. You want to create new, please click the button.
+                <h4 class="card-title">Your ContentID requests</h4>
+                <p class="card-description"> Please send request for removal request spesific url. We'll keep in touch with YouTube for this.
                 </p>
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Artist</th>
-                            <th>Record Label</th>
-                            <th>Release Date</th>
-			    <th>Platforms</th>
-			    <th>Status</th>
+                            <th>URL</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-			{% for dist in dists %}
+			{% for content in list %}
 			<tr>
-			    <td>{{ dist.title }}</td>
-			    <td>{{ dist.artist }}</td>
-			    <td>{{ dist.recordLabel }}</td>
-			    <td>{{ dist.releaseDate }}</td>
-			    <td>{% for platform in dist.platforms.all %}<span class="badge badge-secondary ml-1">{{ platform }}</span>{% endfor %}</td>
-			    <td><label class="badge badge-danger">Pending</label></td>
+			    <td>{{ content.title }}</td>
+			    <td>{{ content.url }}</td>
+			    <td>{% if content.status == 0 %}<label class="badge badge-danger">Pending</label>{% endif %}{% if content.status == 1 %}<label class="badge badge-success">Removal Request Received</label>{% endif %}</td>
 			</tr>
 			{% endfor %}
                     </tbody>

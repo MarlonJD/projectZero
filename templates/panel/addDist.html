@@ -175,7 +175,14 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaTitle">Artist Name</label>
-				    <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+				    <span v-if="media.artist">
+					<b-form-input v-model="media.artist" placeholder="Main Artist Name" readonly></b-form-input>
+					<small id="artistHelp" class="form-text text-muted">Your artist name is default now. You cannot change</small>
+				    </span>
+				    <span v-else>
+					<b-form-input v-else v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+				    </span>
+				    
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaGenre">Genre</label>
@@ -218,6 +225,7 @@
 				</div>
 			    </b-form-group>
 
+			    <!--
 			    <h6 class="card-subtitle mb-2 text-muted">Select if you want to promate these platforms</h6>
 			    <b-form-group>
 				<div class="row pl-3 pt-2">
@@ -229,6 +237,7 @@
 				    </b-form-checkbox>
 				</div>
 			    </b-form-group>
+			    -->
 			</div>
 		    </div>
 		    
@@ -317,7 +326,7 @@
 	     type: null,
 	     cover: null,
 	     title: null,
-	     artist: null,
+	     artist: '{{ artist.name }}',
 	     genre: null,
 	     subGenre: null,
 	     recordLabel: null,
@@ -433,6 +442,7 @@
 	     formData0.append('releaseDate', this.media.releaseDate);
 	     formData0.append('tracks', JSON.stringify(this.filesLoad));
 	     formData0.append('platforms', JSON.stringify(this.media.platforms));
+	     formData0.append('splitPay', JSON.stringify(this.rows));
 	     axios
 		 .post('/addDist',
 		       formData0,
