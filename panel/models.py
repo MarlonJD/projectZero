@@ -110,6 +110,11 @@ class Album(models.Model):
             genre, subgenre is the media's genre
             partners is Partner
     """
+    class statusType(models.IntegerChoices):
+        PENDING = 0, _('Pending')
+        CONFIRMED = 1, _('Confirmed')
+        __empty__ = _('Please Select...')
+
     class mediaType(models.IntegerChoices):
         SINGLE = 0, _('Single')
         EP = 1, _('EP')
@@ -128,6 +133,7 @@ class Album(models.Model):
     releaseDate = models.DateField()
     platforms = models.ManyToManyField(Platform,
                                        related_name='partners_set')
+    status = models.IntegerField(choices=statusType.choices, default=0)
 
     def __str__(self):
         return self.title + ' by ' + self.artist.name

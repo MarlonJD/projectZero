@@ -1,8 +1,20 @@
-* TODO User Panel[0/1]
-** TODO Statements[0/1]
-*** TODO Add Statements Page
-    SCHEDULED: <2020-01-21 Sal>
+* TODO User Panel[1/1]
+** DONE Statements[1/1]
+   CLOSED: [2020-01-21 Sal 19:03]
+*** DONE Add Statements Page
+    CLOSED: [2020-01-21 Sal 19:03] SCHEDULED: <2020-01-21 Sal>
     :LOGBOOK:
     CLOCK: [2020-01-21 Sal 18:32]--[2020-01-21 Sal 18:53] =>  0:21
     CLOCK: [2020-01-21 Sal 18:02]--[2020-01-21 Sal 18:27] =>  0:25
     :END:
+* TODO Admin Panel[2/2]
+** DONE Add Admin Panel
+   CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
+   :LOGBOOK:
+   CLOCK: [2020-01-21 Sal 19:03]--[2020-01-21 Sal 19:20] =>  0:17
+   :END:
+** DONE Add Distribution Page
+   CLOSED: [2020-01-21 Sal 19:36] SCHEDULED: <2020-01-21 Sal>
+   :LOGBOOK:
+   CLOCK: [2020-01-21 Sal 19:22]--[2020-01-21 Sal 19:36] =>  0:14
+   :END:
