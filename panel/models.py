@@ -12,12 +12,14 @@ RecordLabel, Track, Album
 '''
 
 
-# Artist is Artist(user=request.user, name=String)
-# interp. Main Artist of the media
-#         user is User as artist's usership
-#         name is the main artist name of media       String
-#         appleArtist, spotifyArtist is the URL
 class Artist(models.Model):
+    """
+    Artist is Artist(user=request.user, name=String)
+    interp. Main Artist of the media
+            user is User as artist's usership
+            name is the main artist name of media       String
+            appleArtist, spotifyArtist is the URL
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='artist_set')
@@ -29,11 +31,13 @@ class Artist(models.Model):
         return self.name
 
 
-# OtherArtist is OtherArtist(name=String, rate=Interval[0,100])
-# interp. Other artist of the media.
-#         artist is the Artist                        Artist
-#         rate is the split pay rate of the media     Interval[0,100]
 class OtherArtist(models.Model):
+    """
+    OtherArtist is OtherArtist(name=String, rate=Interval[0,100])
+    interp. Other artist of the media.
+            artist is the Artist                        Artist
+            rate is the split pay rate of the media     Interval[0,100]
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='otherartist_set')
@@ -44,23 +48,27 @@ class OtherArtist(models.Model):
         return self.artist.name + ' ' + str(self.rate) + '%'
 
 
-# Platform is Platform(name=String)
-# interp. Platform of the that media will share in
-#         id is the primary key that automaticly
-#            given and use as enumatation
-#         name is the partner's name                 String
 class Platform(models.Model):
+    """
+    Platform is Platform(name=String)
+    interp. Platform of the that media will share in
+            id is the primary key that automaticly
+               given and use as enumatation
+             name is the partner's name
+    """
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
 
-# RecordLabel is RecordLabel(user=User, name=String)
-# interp. RecordLabel is the label company for media
-#         user is the label company user (if any)
-#         name is the label name
 class RecordLabel(models.Model):
+    """
+    RecordLabel is RecordLabel(user=User, name=String)
+    interp. RecordLabel is the label company for media
+            user is the label company user (if any)
+            name is the label name
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              null=True)
@@ -70,11 +78,13 @@ class RecordLabel(models.Model):
         return self.name
 
 
-# Track is Track(media=FILE)
-# interp. track is the media file
-#         media is the FILE
-#         otherArtists is OtherArtist for split paying
 class Track(models.Model):
+    """
+    Track is Track(media=FILE)
+    interp. track is the media file
+            media is the FILE
+            otherArtists is OtherArtist for split paying
+    """
     number = models.IntegerField()
     name = models.CharField(max_length=150)
     media = models.FileField(upload_to='media')
@@ -85,20 +95,21 @@ class Track(models.Model):
         return self.name
 
 
-# Album is Album(mediaType=mediaType, title=String, artist=Artist,
-#                genre=String, subgenre=String,
-#                recordLabel=String, releaseDate=Date,
-#                platforms=Platform)
-# interp. Album ia music or music video or any media
-#         mediaType is MediaType Choices
-#         tracks is Track list
-#         title is the media's title
-#         artwork is the album cover image
-#         artist is the media's Artist
-#         genre, subgenre is the media's genre
-#         partners is Partner
 class Album(models.Model):
-
+    """
+    Album is Album(mediaType=mediaType, title=String, artist=Artist,
+                   genre=String, subgenre=String,
+                   recordLabel=String, releaseDate=Date,
+                   platforms=Platform)
+    interp. Album ia music or music video or any media
+            mediaType is MediaType Choices
+            tracks is Track list
+            title is the media's title
+            artwork is the album cover image
+            artist is the media's Artist
+            genre, subgenre is the media's genre
+            partners is Partner
+    """
     class mediaType(models.IntegerChoices):
         SINGLE = 0, _('Single')
         EP = 1, _('EP')
@@ -131,13 +142,14 @@ class Album(models.Model):
 '''
 
 
-# ContentID is ContentID(title=String, url=URL, status=statusType Choices)
-# interp. ContentID is Youtube removal request
-#         title is the Media's title
-#         url is media's URL
-#         status is statusType
 class ContentID(models.Model):
-
+    """
+    ContentID is ContentID(title=String, url=URL, status=statusType Choices)
+    interp. ContentID is Youtube removal request
+             title is the Media's title
+             url is media's URL
+             status is statusType
+    """
     class statusType(models.IntegerChoices):
         PENDING = 0, _('Pending')
         RECIEVED = 1, _('Removal Request Received')
@@ -150,24 +162,27 @@ class ContentID(models.Model):
     url = models.URLField()
     status = models.IntegerField(choices=statusType.choices, default=0)
 
+    def __str__(self):
+        return self.title + ' by ' + self.user
+
 
 '''
------------------------------
-     Statistic Models
------------------------------
-     Statistic, Statement
------------------------------
+-----------------------
+     Statistic Model
+-----------------------
 '''
 
 
-# Statistic is Statistic(track=Track, Platform, stream=Integer,
-#                        download=Integer, revenue=Integer)
-# interp. Statistic is Track's statistic
-#         track is track with statistic
-#         platform is Platform
-#         stream is the stream count of media on that platform
-#         revenue is the money comes from platform
 class Statistic(models.Model):
+    """
+    Statistic is Statistic(track=Track, Platform, stream=Integer,
+                           download=Integer, revenue=Integer)
+     interp. Statistic is Track's statistic
+             track is track with statistic
+             platform is Platform
+             stream is the stream count of media on that platform
+             revenue is the money comes from platform
+    """
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
@@ -175,3 +190,40 @@ class Statistic(models.Model):
     download = models.IntegerField()
     revenue = models.IntegerField()
     date = models.DateField()
+
+    def __str__(self):
+        return self.album.title
+
+
+'''
+-----------------------
+     Statement Model
+-----------------------
+'''
+
+
+# Statement is Statement(album=Album, revenue=Integer, date=DateField)
+# interp. Statement is Album's revenue report
+#         album is Album
+#         revenue is Album's this month's revenue
+#         date is which month is renevue has come
+class Statement(models.Model):
+    '''
+    Statement is Statement(album=Album, revenue=Integer, date=DateField)
+     interp. Statement is Album's revenue report
+             album is Album
+             revenue is Album's this month's revenue
+             date is which month is renevue has come
+    '''
+    class statusType(models.IntegerChoices):
+        PENDING = 0, _('Pending')
+        RECIEVED = 1, _('Statement Recieved')
+        __empty__ = _('Please Select...')
+
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    revenue = models.IntegerField()
+    date = models.DateField()
+    status = models.IntegerField(choices=statusType.choices, default=0)
+
+    def __str__(self):
+        return self.album.title

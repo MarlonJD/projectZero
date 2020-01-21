@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView
 from .models import (Album, Artist, Track, Platform,
-                     ContentID, Statistic)
+                     ContentID, Statistic, Statement)
 import json
 
 
@@ -166,3 +166,23 @@ class statisticUserListView(LoginRequiredMixin, ListView):
         artistObj = Artist.objects.get(user=self.request.user)
         albumObj = Album.objects.filter(artist=artistObj)
         return Statistic.objects.filter(album__in=albumObj)
+
+
+'''
+--------------
+Statement Page
+--------------
+'''
+
+
+class statementUserListView(LoginRequiredMixin, ListView):
+    '''
+    Panel, Statement Page Class Based View: ListView
+    '''
+    template_name = 'panel/statement.html'
+    model = Statement
+
+    def get_queryset(self):
+        artistObj = Artist.objects.get(user=self.request.user)
+        albumObj = Album.objects.filter(artist=artistObj)
+        return Statement.objects.filter(album__in=albumObj)

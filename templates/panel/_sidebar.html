@@ -28,12 +28,14 @@
 		<i class=" mdi mdi-library-music menu-icon"></i>
 	    </a>
 	</li>
+	<!--
 	<li class="nav-item">
 	    <a class="nav-link" href="">
 		<span class="menu-title">{% trans 'User' %}</span>
 		<i class="mdi mdi-account-multiple menu-icon"></i>
 	    </a>
 	</li>
+	-->
 	<li class="nav-item">
 	    <a class="nav-link" href="{% url 'panel:contentID' %}">
 		<span class="menu-title">{% trans 'Content ID' %}</span>
@@ -47,12 +49,12 @@
 	    </a>
 	</li>
 	<li class="nav-item">
-	    <a class="nav-link" href="">
-		<span class="menu-title">{% trans 'Statements' %}</span>
+	    <a class="nav-link" href="{% url 'panel:statement' %}">
+		<span class="menu-title">{% trans 'Statement' %}</span>
 		<i class="mdi mdi-bank menu-icon"></i>
 	    </a>
 	</li>
-	<li class="nav-item">
+	<!--li class="nav-item">
 	    <a class="nav-link" data-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
 		<span class="menu-title">{% trans 'Category' %}</span>
 		<i class="menu-arrow"></i>
@@ -64,6 +66,6 @@
 		    <li class="nav-item"> <a class="nav-link" href="/admin/categories">{% trans 'Category' %}</a></li>
 		</ul>
 	    </div>
-    </li>
-  </ul>
+	</li-->
+    </ul>
 </nav>

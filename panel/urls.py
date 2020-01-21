@@ -14,5 +14,7 @@ urlpatterns = [
     path('contentID/request/', views.contentIDUserRequestCreateView.as_view(),
          name='contentIDRequest'),
     path('statistic/', views.statisticUserListView.as_view(),
-         name='statistic')
+         name='statistic'),
+    path('statement/', views.statementUserListView.as_view(),
+         name='statement'),
 ]

@@ -1,0 +1,8 @@
+* TODO User Panel[0/1]
+** TODO Statements[0/1]
+*** TODO Add Statements Page
+    SCHEDULED: <2020-01-21 Sal>
+    :LOGBOOK:
+    CLOCK: [2020-01-21 Sal 18:32]--[2020-01-21 Sal 18:53] =>  0:21
+    CLOCK: [2020-01-21 Sal 18:02]--[2020-01-21 Sal 18:27] =>  0:25
+    :END:
