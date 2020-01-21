@@ -89,7 +89,7 @@ class Track(models.Model):
     name = models.CharField(max_length=150)
     media = models.FileField(upload_to='media')
     OtherArtists = models.ManyToManyField(OtherArtist,
-                                          related_name='otherArtists_set')
+                                          related_name='otherArtists_set', blank=True)
 
     def __str__(self):
         return self.name
