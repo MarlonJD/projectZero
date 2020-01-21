@@ -125,7 +125,7 @@ class Album(models.Model):
     tracks = models.ManyToManyField(Track,
                                     related_name='tracks_set')
     title = models.CharField(max_length=150)
-    artwork = models.ImageField()
+    artwork = models.ImageField(upload_to='media/cover')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     genre = models.CharField(max_length=50)
     subgenre = models.CharField(max_length=50, null=True)

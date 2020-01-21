@@ -1,4 +1,6 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from panel.models import (Album)
 
@@ -27,3 +29,8 @@ class distributionAdminListView(AdminStaffRequiredMixin, ListView):
 
     def get_queryset(self):
         return Album.objects.all().order_by('status')
+
+
+class distributionAdminDetailView(AdminStaffRequiredMixin, DetailView):
+    template_name = 'secret/distDetail.html'
+    model = Album
