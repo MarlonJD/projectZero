@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:addDist' %}"><i class="mdi mdi-plus"></i>New Distribution</a>
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:addDist' %}"><i class="mdi mdi-plus"></i>{% trans "New Distribution" %}</a>
             </li>
         </ul>
     </nav>
@@ -22,29 +22,29 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Your Distributions</h4>
-                <p class="card-description"> All distirbutions is here. You want to create new, please click the button.
+                <h4 class="card-title">{% trans "Your Distributions" %}</h4>
+                <p class="card-description"> {% trans "All distirbutions is here. You want to create new, please click the button." %}
                 </p>
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Artist</th>
-                            <th>Record Label</th>
-                            <th>Release Date</th>
-			    <th>Platforms</th>
-			    <th>Status</th>
+                            <th>{% trans "Title" %}</th>
+                            <th>{% trans "Artist" %}</th>
+                            <th>{% trans "Record Label" %}</th>
+                            <th>{% trans "Release Date" %}</th>
+			    <th>{% trans "Platforms" %}</th>
+			    <th>{% trans "Status" %}</th>
                         </tr>
                     </thead>
                     <tbody>
-			{% for dist in dists %}
+			{% for dist in object_list %}
 			<tr>
 			    <td>{{ dist.title }}</td>
 			    <td>{{ dist.artist }}</td>
 			    <td>{{ dist.recordLabel }}</td>
 			    <td>{{ dist.releaseDate }}</td>
 			    <td>{% for platform in dist.platforms.all %}<span class="badge badge-secondary ml-1">{{ platform }}</span>{% endfor %}</td>
-			    <td><label class="badge badge-danger">Pending</label></td>
+			    <td><label class="badge badge-danger">{% trans "Pending" %}</label></td>
 			</tr>
 			{% endfor %}
                     </tbody>

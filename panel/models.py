@@ -34,6 +34,9 @@ class Artist(models.Model):
 #         artist is the Artist                        Artist
 #         rate is the split pay rate of the media     Interval[0,100]
 class OtherArtist(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             related_name='otherartist_set')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     rate = models.IntegerField()
 
@@ -63,6 +66,9 @@ class RecordLabel(models.Model):
                              null=True)
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 # Track is Track(media=FILE)
 # interp. track is the media file
@@ -74,6 +80,9 @@ class Track(models.Model):
     media = models.FileField(upload_to='media')
     OtherArtists = models.ManyToManyField(OtherArtist,
                                           related_name='otherArtists_set')
+
+    def __str__(self):
+        return self.name
 
 
 # Album is Album(mediaType=mediaType, title=String, artist=Artist,

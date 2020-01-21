@@ -1,0 +1,54 @@
+{% extends 'panel/layout.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-home"></i>
+        </span> {% trans 'Statistics' %}</h3>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{% trans "Your Statistics" %}</h4>
+                <p class="card-description"> {% trans "All statistics is here. You can see all the your distributions' statistics" %}
+                </p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Album" %}</th>
+                            <th>{% trans "Track" %}</th>
+                            <th>{% trans "Platform" %}</th>
+                            <th>{% trans "Stream" %}</th>
+			    <th>{% trans "Download" %}</th>
+			    <th>{% trans "Revenue" %}</th>
+			    <th>{% trans "Date" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			{% for s in object_list %}
+			<tr>
+			    <td>{{ s.album }}</td>
+			    <td>{{ s.track }}</td>
+			    <td>{{ s.platform }}</td>
+			    <td>{{ s.stream }}</td>
+			    <td>{{ s.download }}</td>
+			    <td>{{ s.revenue }}</td>
+			    <td>{{ s.date }}</td>
+			</tr>
+			{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

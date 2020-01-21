@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView
 from .models import (Album, Artist, Track, Platform,
-                     ContentID)
+                     ContentID, Statistic)
 import json
 
 
@@ -14,6 +14,13 @@ class indexUserTemplateView(LoginRequiredMixin, TemplateView):
     Panel Home Page (Dashboard) Page Class View
     '''
     template_name = "panel/index.html"
+
+
+'''
+---------------
+Distribution Page
+---------------
+'''
 
 
 class distUserListView(LoginRequiredMixin, ListView):
@@ -108,6 +115,13 @@ def trackUploadUser(request):
             "Message": "Couldn't upload media for some reason"}, status=418)
 
 
+'''
+---------------
+ContentID Page
+---------------
+'''
+
+
 class contentIDUserListView(LoginRequiredMixin, ListView):
     '''
     Panel, ContentID Page Class Based View: ListView
@@ -115,7 +129,6 @@ class contentIDUserListView(LoginRequiredMixin, ListView):
     template_name = 'panel/contentID.html'
     model = ContentID
     # paginate_by = 50
-    context_object_name = 'list'
 
     def get_queryset(self):
         return ContentID.objects.filter(user=self.request.user)
@@ -133,3 +146,23 @@ class contentIDUserRequestCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(contentIDUserRequestCreateView, self).form_valid(form)
+
+
+'''
+---------------
+Statistic Page
+---------------
+'''
+
+
+class statisticUserListView(LoginRequiredMixin, ListView):
+    '''
+    Panel, Statistic Page Class Based View: ListView
+    '''
+    template_name = 'panel/statistic.html'
+    model = Statistic
+
+    def get_queryset(self):
+        artistObj = Artist.objects.get(user=self.request.user)
+        albumObj = Album.objects.filter(artist=artistObj)
+        return Statistic.objects.filter(album__in=albumObj)

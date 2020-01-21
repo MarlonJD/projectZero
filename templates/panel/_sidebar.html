@@ -1,69 +1,69 @@
 {% load static %}
 {% load i18n %}
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <ul class="nav">
-    <li class="nav-item nav-profile">
-      <a href="#" class="nav-link">
-          <div class="nav-profile-image">
-              <img src="https://api.adorable.io/avatars/75/{{ user.email }}" alt="profile">
-          <span class="login-status online"></span>
-          <!--change to offline or busy as needed-->
-        </div>
-        <div class="nav-profile-text d-flex flex-column">
-          <span class="font-weight-bold mb-2">{{ user }}</span>
-          <span class="text-secondary text-small">{{ user.artist_set.all.0 }}</span>
-        </div>
-        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="{% url 'panel:index' %}">
-            <span class="menu-title">{% trans 'Dashboard' %}</span>
-            <i class="mdi mdi-home menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="{% url 'panel:distribution' %}">
-            <span class="menu-title">{% trans 'Distribution' %}</span>
-            <i class=" mdi mdi-library-music menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="">
-            <span class="menu-title">{% trans 'User' %}</span>
-            <i class="mdi mdi-account-multiple menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="{% url 'panel:contentID' %}">
-            <span class="menu-title">{% trans 'Content ID' %}</span>
-            <i class="mdi mdi-youtube menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="">
-            <span class="menu-title">{% trans 'Statistic' %}</span>
-            <i class="mdi mdi-chart-areaspline menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" href="">
-            <span class="menu-title">{% trans 'Statements' %}</span>
-            <i class="mdi mdi-bank menu-icon"></i>
-	</a>
-    </li>
-    <li class="nav-item">
-	<a class="nav-link" data-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
-            <span class="menu-title">{% trans 'Category' %}</span>
-            <i class="menu-arrow"></i>
-            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-	</a>
-	<div class="collapse" id="category">
-        <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="/admin/categoryAttributes">{% trans 'Category Attribute' %}</a></li>
-            <li class="nav-item"> <a class="nav-link" href="/admin/categories">{% trans 'Category' %}</a></li>
-        </ul>
-	</div>
+    <ul class="nav">
+	<li class="nav-item nav-profile">
+	    <a href="#" class="nav-link">
+		<div class="nav-profile-image">
+		    <img src="https://api.adorable.io/avatars/75/{{ user.email }}" alt="profile">
+		    <span class="login-status online"></span>
+		    <!--change to offline or busy as needed-->
+		</div>
+		<div class="nav-profile-text d-flex flex-column">
+		    <span class="font-weight-bold mb-2">{{ user }}</span>
+		    <span class="text-secondary text-small">{{ user.artist_set.all.0 }}</span>
+		</div>
+		<i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="{% url 'panel:index' %}">
+		<span class="menu-title">{% trans 'Dashboard' %}</span>
+		<i class="mdi mdi-home menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="{% url 'panel:distribution' %}">
+		<span class="menu-title">{% trans 'Distribution' %}</span>
+		<i class=" mdi mdi-library-music menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="">
+		<span class="menu-title">{% trans 'User' %}</span>
+		<i class="mdi mdi-account-multiple menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="{% url 'panel:contentID' %}">
+		<span class="menu-title">{% trans 'Content ID' %}</span>
+		<i class="mdi mdi-youtube menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="{% url 'panel:statistic' %}">
+		<span class="menu-title">{% trans 'Statistic' %}</span>
+		<i class="mdi mdi-chart-areaspline menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" href="">
+		<span class="menu-title">{% trans 'Statements' %}</span>
+		<i class="mdi mdi-bank menu-icon"></i>
+	    </a>
+	</li>
+	<li class="nav-item">
+	    <a class="nav-link" data-toggle="collapse" href="#category" aria-expanded="false" aria-controls="ui-basic">
+		<span class="menu-title">{% trans 'Category' %}</span>
+		<i class="menu-arrow"></i>
+		<i class="mdi mdi-format-list-bulleted menu-icon"></i>
+	    </a>
+	    <div class="collapse" id="category">
+		<ul class="nav flex-column sub-menu">
+		    <li class="nav-item"> <a class="nav-link" href="/admin/categoryAttributes">{% trans 'Category Attribute' %}</a></li>
+		    <li class="nav-item"> <a class="nav-link" href="/admin/categories">{% trans 'Category' %}</a></li>
+		</ul>
+	    </div>
     </li>
   </ul>
 </nav>

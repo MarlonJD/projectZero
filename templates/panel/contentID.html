@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:contentIDRequest' %}"><i class="mdi mdi-plus"></i>New Request</a>
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:contentIDRequest' %}"><i class="mdi mdi-plus"></i>{% trans "New Request" %}</a>
             </li>
         </ul>
     </nav>
@@ -22,23 +22,23 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Your ContentID requests</h4>
-                <p class="card-description"> Please send request for removal request spesific url. We'll keep in touch with YouTube for this.
+                <h4 class="card-title">{% trans "Your ContentID requests" %}</h4>
+                <p class="card-description"> {% trans "Please send request for removal request spesific url. We'll keep in touch with YouTube for this." %}
                 </p>
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>URL</th>
-                            <th>Status</th>
+                            <th>{% trans "Title" %}</th>
+                            <th>{% trans "URL" %}</th>
+                            <th>{% trans "Status" %}</th>
                         </tr>
                     </thead>
                     <tbody>
-			{% for content in list %}
+			{% for content in object_list %}
 			<tr>
 			    <td>{{ content.title }}</td>
 			    <td>{{ content.url }}</td>
-			    <td>{% if content.status == 0 %}<label class="badge badge-danger">Pending</label>{% endif %}{% if content.status == 1 %}<label class="badge badge-success">Removal Request Received</label>{% endif %}</td>
+			    <td>{% if content.status == 0 %}<label class="badge badge-danger">{% trans "Pending" %}</label>{% endif %}{% if content.status == 1 %}<label class="badge badge-success">{% trans "Removal Request Received" %}</label>{% endif %}</td>
 			</tr>
 			{% endfor %}
                     </tbody>

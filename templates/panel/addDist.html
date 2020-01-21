@@ -175,14 +175,12 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaTitle">Artist Name</label>
-				    <span v-if="media.artist">
+				    {% if artist.name %}
 					<b-form-input v-model="media.artist" placeholder="Main Artist Name" readonly></b-form-input>
 					<small id="artistHelp" class="form-text text-muted">Your artist name is default now. You cannot change</small>
-				    </span>
-				    <span v-else>
-					<b-form-input v-else v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
-				    </span>
-				    
+                                    {% else %}
+                                        <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+                                    {% endif %}			    
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaGenre">Genre</label>
@@ -326,7 +324,7 @@
 	     type: null,
 	     cover: null,
 	     title: null,
-	     artist: '{{ artist.name }}',
+	     artist: null,
 	     genre: null,
 	     subGenre: null,
 	     recordLabel: null,
@@ -393,7 +391,7 @@
 	     var formData = new FormData(form);
 	     
 	     axios
-		 .post('/trackUpload',formData,{
+		 .post('/trackUpload/',formData,{
 		     headers: {
 			 'Content-Type': 'multipart/form-data'
 		     }
@@ -444,7 +442,7 @@
 	     formData0.append('platforms', JSON.stringify(this.media.platforms));
 	     formData0.append('splitPay', JSON.stringify(this.rows));
 	     axios
-		 .post('/addDist',
+		 .post('/distribution/add/',
 		       formData0,
 		       {
 			   headers: {
@@ -478,7 +476,7 @@
 	 platformsText(){
 	     returnVal = '';
 	     for (i=0; i < this.media.platforms.length; i++) {
-      		 returnVal += this.mediaPlatformsOptions[this.media.platforms[i]].text;
+      		 returnVal += this.mediaPlatformsOptions[this.media.platforms[i]-1].text;
 		 if(i < this.media.platforms.length - 1){ returnVal += ", ";}
 	     }
 	     return returnVal;
