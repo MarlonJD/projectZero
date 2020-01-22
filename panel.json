@@ -1,0 +1,261 @@
+[{
+      "model":"panel.platform",
+      "pk":1,
+      "fields":{
+         "name":"Alibaba"
+      
+} 
+},
+   {
+      "model":"panel.platform",
+      "pk":2,
+      "fields":{
+         "name":"Amazon"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":3,
+      "fields":{
+         "name":"Anghami"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":4,
+      "fields":{
+         "name":"Apple Music"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":5,
+      "fields":{
+         "name":"Audiomack"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":6,
+      "fields":{
+         "name":"Beatport"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":7,
+      "fields":{
+         "name":"Deezer"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":8,
+      "fields":{
+         "name":"Dubset"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":9,
+      "fields":{
+         "name":"Facebook/Instagram"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":10,
+      "fields":{
+         "name":"Google Play"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":11,
+      "fields":{
+         "name":"iHeartRadio"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":12,
+      "fields":{
+         "name":"MelonPlus"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":13,
+      "fields":{
+         "name":"MixCloud"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":14,
+      "fields":{
+         "name":"Napster"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":15,
+      "fields":{
+         "name":"Netease"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":16,
+      "fields":{
+         "name":"Pandora Plus"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":17,
+      "fields":{
+         "name":"Play Network"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":18,
+      "fields":{
+         "name":"Saavn"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":19,
+      "fields":{
+         "name":"Shazam"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":20,
+      "fields":{
+         "name":"Soundcould"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":21,
+      "fields":{
+         "name":"Sound Exchange"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":22,
+      "fields":{
+         "name":"Spotify"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":23,
+      "fields":{
+         "name":"Tencent"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":24,
+      "fields":{
+         "name":"Tesla"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":25,
+      "fields":{
+         "name":"Tidal"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":26,
+      "fields":{
+         "name":"TikTok"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":27,
+      "fields":{
+         "name":"VK"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":28,
+      "fields":{
+         "name":"Yandex"
+      
+}
+   
+},
+   {
+      "model":"panel.platform",
+      "pk":29,
+      "fields":{
+         "name":"Youtube Music"
+      
+      }
+   
+   }
+]

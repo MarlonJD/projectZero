@@ -16,11 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('django.contrib.auth.urls')),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    # path('', include('django.contrib.auth.urls')),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('passwordReset/', auth_views.PasswordResetView.as_view(),
+         name='password_reset'),
     path('', include('panel.urls')),
     path('secret/', include('secret.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

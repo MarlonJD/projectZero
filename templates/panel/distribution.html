@@ -44,7 +44,19 @@
 			    <td>{{ dist.recordLabel }}</td>
 			    <td>{{ dist.releaseDate }}</td>
 			    <td>{% for platform in dist.platforms.all %}<span class="badge badge-secondary ml-1">{{ platform }}</span>{% endfor %}</td>
-			    <td><label class="badge badge-danger">{% trans "Pending" %}</label></td>
+			    <td>{% if dist.status == 0 %}
+				<label class="badge badge-warning">{% trans "Pending" %}</label>
+				{% endif %}
+				{% if dist.status == 1 %}
+				<label class="badge badge-info">{% trans "in Progress" %}</label>
+				{% endif %}
+				{% if dist.status == 2 %}
+				<label class="badge badge-success">{% trans "Confirmed" %}</label>
+				{% endif %}
+				{% if dist.status == 3 %}
+				<label class="badge badge-danger">{% trans "Rejected" %}</label>
+				{% endif %}
+			    </td>
 			</tr>
 			{% endfor %}
                     </tbody>

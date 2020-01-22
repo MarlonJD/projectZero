@@ -24,8 +24,8 @@ class Artist(models.Model):
                              on_delete=models.CASCADE,
                              related_name='artist_set')
     name = models.CharField(max_length=100, null=True)
-    appleArtist = models.URLField(null=True)
-    spotifyArtist = models.URLField(null=True)
+    appleArtist = models.URLField(null=True, blank=True)
+    spotifyArtist = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -112,7 +112,9 @@ class Album(models.Model):
     """
     class statusType(models.IntegerChoices):
         PENDING = 0, _('Pending')
-        CONFIRMED = 1, _('Confirmed')
+        INPROGRESS = 1, _('in Progress')
+        CONFIRMED = 2, _('Confirmed')
+        REJECTED = 3, _('Rejected')
         __empty__ = _('Please Select...')
 
     class mediaType(models.IntegerChoices):
