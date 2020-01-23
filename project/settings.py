@@ -153,7 +153,7 @@ LOGIN_URL = '/login/'
 # Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-if os.environ['DEBUG']:
+if not os.environ['DEBUG']:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'zerodayent/static')
