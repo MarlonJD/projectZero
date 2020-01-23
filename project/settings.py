@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import dj_database_url
-import mimetypes
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +27,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ['DEBUG']
 
 ALLOWED_HOSTS = ['.herokuapp.com', ]
-
 
 # Application definition
 
@@ -97,8 +95,8 @@ else:
             'NAME': os.environ['DB_NAME'],
             'USER': os.environ['DB_USER'],
             'PASSWORD': os.environ['DB_PASSWORD'],
-            'HOST': 'localhost',
-            'PORT': '',
+            'HOST': os.environ['DB_HOST'],
+            'PORT': os.environ['DB_PORT'],
         }
     }
 
