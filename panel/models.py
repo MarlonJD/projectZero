@@ -87,9 +87,10 @@ class Track(models.Model):
     """
     number = models.IntegerField()
     name = models.CharField(max_length=150)
-    media = models.FileField(upload_to='media')
+    media = models.FileField(upload_to='tracks')
     OtherArtists = models.ManyToManyField(OtherArtist,
-                                          related_name='otherArtists_set', blank=True)
+                                          related_name='otherArtists_set',
+                                          blank=True)
 
     def __str__(self):
         return self.name
@@ -171,7 +172,7 @@ class ContentID(models.Model):
     status = models.IntegerField(choices=statusType.choices, default=0)
 
     def __str__(self):
-        return self.title + ' by ' + self.user
+        return self.title + ' by ' + self.user.username
 
 
 '''
