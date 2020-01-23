@@ -152,4 +152,3 @@ if not os.environ['DEBUG']:
     }
 
     DEFAULT_FILE_STORAGE = 'project.storage_backends.MediaStorage'
-    AWS_DEFAULT_ACL = None
