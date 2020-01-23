@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserCreationForm
-from panel.models import (Album)
+from panel.models import (Album, ContentID, Statistic)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -71,7 +71,47 @@ class userAdminListView(AdminStaffRequiredMixin, ListView):
     fields = ['username', 'email', ]
 
 
-class userSignUpAdminCreateView(CreateView):
+class userSignUpAdminCreateView(AdminStaffRequiredMixin, CreateView):
+    """
+    Admin, User SignUp Page Class View: CreateView
+    """
     form_class = UserCreationForm
     success_url = reverse_lazy('secret:user')
     template_name = 'secret/userRegister.html'
+
+
+class contentIDAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, contentID Page Class View: ListView
+    """
+    template_name = 'secret/contentID.html'
+    model = ContentID
+    fields = '__all__'
+
+
+class contentIDAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
+    """
+    Admin, contentID Update Function, Class View: UpdateView
+    """
+    model = ContentID
+    fields = ['status', ]
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:contentID')
+
+
+class contentIDAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
+    """
+    Admin, ContentID Delete Function, Class View: DeleteView
+    """
+    model = ContentID
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:contentID')
+
+
+class statisticAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, Statistic Page Class View: ListView
+    """
+    model = Statistic
+    template_name = 'secret/statistic.html'
+    fields = '__all__'

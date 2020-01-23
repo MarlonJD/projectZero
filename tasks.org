@@ -7,14 +7,14 @@
     CLOCK: [2020-01-21 Sal 18:32]--[2020-01-21 Sal 18:53] =>  0:21
     CLOCK: [2020-01-21 Sal 18:02]--[2020-01-21 Sal 18:27] =>  0:25
     :END:
-* TODO Admin Panel[1/2]
+* TODO Admin Panel[3/5]
 ** DONE Add Admin Panel
    CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
    :LOGBOOK:
    CLOCK: [2020-01-21 Sal 19:03]--[2020-01-21 Sal 19:20] =>  0:17
    :END:
-** TODO Add Distribution Page[1/3]
-   SCHEDULED: <2020-01-21 Sal>
+** DONE Add Distribution Page[2/2]
+   CLOSED: [2020-01-23 Prş 16:19] SCHEDULED: <2020-01-21 Sal>
    :LOGBOOK:
    CLOCK: [2020-01-21 Sal 19:22]--[2020-01-21 Sal 19:36] =>  0:14
    :END:
@@ -23,6 +23,17 @@
     :LOGBOOK:
     CLOCK: [2020-01-21 Sal 20:25]--[2020-01-21 Sal 20:56] =>  0:31
     :END:
-*** TODO Add Edit View
-*** TODO Add Delete View
-
+*** DONE Add Delete View
+    CLOSED: [2020-01-23 Prş 16:19]
+** DONE Add Content ID
+   CLOSED: [2020-01-23 Prş 16:48] SCHEDULED: <2020-01-23 Prş>
+   :LOGBOOK:
+   CLOCK: [2020-01-23 Prş 16:27]--[2020-01-23 Prş 16:48] =>  0:21
+   :END:
+** TODO Add Statistic
+   SCHEDULED: <2020-01-23 Prş>
+   :LOGBOOK:
+   CLOCK: [2020-01-23 Prş 17:11]--[2020-01-23 Prş 18:03] =>  0:52
+   :END:
+** TODO Add Statements
+   SCHEDULED: <2020-01-23 Prş>
