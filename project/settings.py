@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'storages',
     'django_cleanup',
+    'whitenoise.runserver_nostatic',
     'crispy_forms',
     'panel.apps.PanelConfig',
     'secret.apps.SecretConfig'
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -151,7 +153,11 @@ LOGIN_URL = '/login/'
 # Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-if os.environ['DEBUG'] == False:
+if os.environ['DEBUG']:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'zerodayent/static')
+    ]
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     AWS_STORAGE_BUCKET_NAME = 'zerodayent-media'
