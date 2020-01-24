@@ -3,10 +3,13 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserCreationForm
-from panel.models import (Album, ContentID, Statistic)
+from panel.models import (Album, ContentID, Statistic, Track, Platform)
+from django.utils.translation import gettext as _
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -115,3 +118,32 @@ class statisticAdminListView(AdminStaffRequiredMixin, ListView):
     model = Statistic
     template_name = 'secret/statistic.html'
     fields = '__all__'
+
+
+def load_tracks(request, aid):
+    albumObj = Album.objects.get(pk=aid)
+    tracks = Track.objects.filter(tracks_set=albumObj)
+    jResponse = [{'value': "", 'text': _('Please select an option')}, ]
+    for track in tracks:
+        jResponse.append({'text': track.name, 'value': track.pk})
+    return JsonResponse(jResponse, safe=False)
+
+
+def statisticAdminAddFunctionView(request):
+    if request.method == 'POST':
+        albumObj = Album.objects.get(pk=request.POST['album'])
+        trackObj = Track.objects.get(pk=request.POST['track'])
+        platformObj = Platform.objects.get(pk=request.POST['platform'])
+
+        Statistic.objects.create(album=albumObj,
+                                 track=trackObj,
+                                 platform=platformObj,
+                                 stream=request.POST['stream'],
+                                 download=request.POST['download'],
+                                 revenue=request.POST['revenue'],
+                                 date=request.POST['date'])
+        return redirect(reverse_lazy('secret:statistic'))
+    else:
+        albums = Album.objects.all()
+        params = {'albums': albums, 'platforms': Platform.objects.all}
+        return render(request, 'secret/statisticAdd.html', params)

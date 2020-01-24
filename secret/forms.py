@@ -5,6 +5,13 @@ from django.contrib.auth import (
 )
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.models import User
+from panel.models import Statistic, Track
+from django.utils.encoding import force_text
+from django.utils.safestring import mark_safe
+from django.utils.html import format_html
+from django.forms.widgets import Widget
+from django.template import loader
+from django.utils.safestring import mark_safe
 
 UserModel = get_user_model()
 
@@ -79,3 +86,19 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class StatisticForm(forms.ModelForm):
+    class Meta:
+        model = Statistic
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['album'].widget.attrs.update({
+            'v-model': 'album', '@change': 'getTracks(album)'
+        })
+        self.fields['track'].queryset = Track.objects.none()
+        self.fields['track'].widget.attrs.update({
+            'v-model': 'tracks'
+        })

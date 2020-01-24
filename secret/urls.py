@@ -25,5 +25,11 @@ urlpatterns = [
          views.contentIDAdminUpdateView.as_view(),
          name='contentID-update'),
     path('contentid/delete/<pk>/', views.contentIDAdminDeleteView.as_view(),
-         name='contentID-delete')
+         name='contentID-delete'),
+    path('statistic/', views.statisticAdminListView.as_view(),
+         name='statistic'),
+    path('statistic/loadTracks/<aid>/', views.load_tracks,
+         name='loadTracks'),
+    path('statistic/add/', views.statisticAdminAddFunctionView,
+         name='addStatistic'),
 ]
