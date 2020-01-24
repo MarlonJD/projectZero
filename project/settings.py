@@ -32,7 +32,10 @@ try:
 except KeyError:
     DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapp.com', ]
+if not DEBUG:
+    ALLOWED_HOSTS = ['.herokuapp.com', ]
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
