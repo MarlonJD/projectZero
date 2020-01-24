@@ -21,10 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+try:
+    SECRET_KEY = os.environ['SECRET_KEY']
+except KeyError:
+    SECRET_KEY = "8j7p#c(&5kni8ed1qh4gj#21ak66%%=9rzxe+$!_&@3po+4l2s"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+try:
+    DEBUG = os.environ['DEBUG']
+except KeyError:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', ]
 
@@ -81,7 +87,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if os.environ['DEBUG']:
+if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -141,7 +147,7 @@ LOGIN_URL = '/login/'
 # Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-if not os.environ['DEBUG']:
+if not DEBUG:
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     AWS_STORAGE_BUCKET_NAME = 'zerodayent-media'
