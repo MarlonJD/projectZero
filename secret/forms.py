@@ -5,7 +5,7 @@ from django.contrib.auth import (
 )
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.models import User
-from panel.models import Statistic, Track
+from panel.models import Statement
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
@@ -88,17 +88,14 @@ class UserCreationForm(forms.ModelForm):
         return user
 
 
-class StatisticForm(forms.ModelForm):
+class StatementForm(forms.ModelForm):
     class Meta:
-        model = Statistic
-        fields = '__all__'
+        model = Statement
+        fields = ['album', 'revenue', 'date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['album'].widget.attrs.update({
-            'v-model': 'album', '@change': 'getTracks(album)'
-        })
-        self.fields['track'].queryset = Track.objects.none()
-        self.fields['track'].widget.attrs.update({
-            'v-model': 'tracks'
-        })
+        self.fields['album'].widget.attrs['class'] = 'custom-select'

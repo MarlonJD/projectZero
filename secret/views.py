@@ -4,12 +4,11 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import UserCreationForm
-from panel.models import (Album, ContentID, Statistic, Track, Platform)
-from django.utils.translation import gettext as _
+from .forms import UserCreationForm, StatementForm
+from panel.models import (Album, ContentID, Statistic, Track, Platform,
+                          Statement)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -119,17 +118,14 @@ class statisticAdminListView(AdminStaffRequiredMixin, ListView):
     template_name = 'secret/statistic.html'
     fields = '__all__'
 
-
-def load_tracks(request, aid):
-    albumObj = Album.objects.get(pk=aid)
-    tracks = Track.objects.filter(tracks_set=albumObj)
-    jResponse = [{'value': "", 'text': _('Please select an option')}, ]
-    for track in tracks:
-        jResponse.append({'text': track.name, 'value': track.pk})
-    return JsonResponse(jResponse, safe=False)
+    def get_queryset(self):
+        return Statistic.objects.all().order_by('album')
 
 
 def statisticAdminAddFunctionView(request):
+    """
+    Admin Statistic Add Function View
+    """
     if request.method == 'POST':
         albumObj = Album.objects.get(pk=request.POST['album'])
         trackObj = Track.objects.get(pk=request.POST['track'])
@@ -147,3 +143,43 @@ def statisticAdminAddFunctionView(request):
         albums = Album.objects.all()
         params = {'albums': albums, 'platforms': Platform.objects.all}
         return render(request, 'secret/statisticAdd.html', params)
+
+
+class statementsAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, Statement Page Class View: ListView
+    """
+    model = Statement
+    template_name = 'secret/statement.html'
+    fields = '__all__'
+
+    def get_queryset(self):
+        return Statement.objects.all().order_by('album')
+
+
+class statementAdminCreateView(AdminStaffRequiredMixin, CreateView):
+    """
+    Admin, Statement Add Page Class View: CreateView
+    """
+    form_class = StatementForm
+    success_url = reverse_lazy('secret:statement')
+    template_name = 'secret/statementAdd.html'
+
+
+class statementAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
+    """
+    Admin, Statement Update Function, Class View: UpdateView
+    """
+    model = Statement
+    fields = ['status', ]
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:statement')
+
+
+class statementAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
+    """
+    Admin, Statement Delete Function, Class View: DeleteView
+    """
+    model = Statement
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:statement')
