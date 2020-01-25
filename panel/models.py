@@ -135,7 +135,7 @@ class Album(models.Model):
     recordLabel = models.CharField(max_length=150)
     releaseDate = models.DateField()
     platforms = models.ManyToManyField(Platform,
-                                       related_name='partners_set')
+                                       related_name='platforms_set')
     status = models.IntegerField(choices=statusType.choices, default=0)
 
     def __str__(self):

@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django_cleanup',
     'whitenoise.runserver_nostatic',
     'crispy_forms',
+    'rest_framework',
+    'api.apps.ApiConfig',
     'panel.apps.PanelConfig',
     'secret.apps.SecretConfig'
 ]

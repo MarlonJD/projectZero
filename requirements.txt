@@ -4,6 +4,7 @@ eyed3>=0.9
 django-crispy-forms>=1.8.1
 docutils>=0.16
 django-cleanup
+djangorestframework>=3.11.0
 
 # AWS
 boto3>=1.11.7

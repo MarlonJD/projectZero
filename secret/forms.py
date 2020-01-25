@@ -5,6 +5,13 @@ from django.contrib.auth import (
 )
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.models import User
+from panel.models import Statement
+from django.utils.encoding import force_text
+from django.utils.safestring import mark_safe
+from django.utils.html import format_html
+from django.forms.widgets import Widget
+from django.template import loader
+from django.utils.safestring import mark_safe
 
 UserModel = get_user_model()
 
@@ -79,3 +86,16 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class StatementForm(forms.ModelForm):
+    class Meta:
+        model = Statement
+        fields = ['album', 'revenue', 'date']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['album'].widget.attrs['class'] = 'custom-select'

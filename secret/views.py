@@ -3,10 +3,12 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import UserCreationForm
-from panel.models import (Album, ContentID, Statistic)
+from .forms import UserCreationForm, StatementForm
+from panel.models import (Album, ContentID, Statistic, Track, Platform,
+                          Statement)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -115,3 +117,69 @@ class statisticAdminListView(AdminStaffRequiredMixin, ListView):
     model = Statistic
     template_name = 'secret/statistic.html'
     fields = '__all__'
+
+    def get_queryset(self):
+        return Statistic.objects.all().order_by('album')
+
+
+def statisticAdminAddFunctionView(request):
+    """
+    Admin Statistic Add Function View
+    """
+    if request.method == 'POST':
+        albumObj = Album.objects.get(pk=request.POST['album'])
+        trackObj = Track.objects.get(pk=request.POST['track'])
+        platformObj = Platform.objects.get(pk=request.POST['platform'])
+
+        Statistic.objects.create(album=albumObj,
+                                 track=trackObj,
+                                 platform=platformObj,
+                                 stream=request.POST['stream'],
+                                 download=request.POST['download'],
+                                 revenue=request.POST['revenue'],
+                                 date=request.POST['date'])
+        return redirect(reverse_lazy('secret:statistic'))
+    else:
+        albums = Album.objects.all()
+        params = {'albums': albums, 'platforms': Platform.objects.all}
+        return render(request, 'secret/statisticAdd.html', params)
+
+
+class statementsAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, Statement Page Class View: ListView
+    """
+    model = Statement
+    template_name = 'secret/statement.html'
+    fields = '__all__'
+
+    def get_queryset(self):
+        return Statement.objects.all().order_by('album')
+
+
+class statementAdminCreateView(AdminStaffRequiredMixin, CreateView):
+    """
+    Admin, Statement Add Page Class View: CreateView
+    """
+    form_class = StatementForm
+    success_url = reverse_lazy('secret:statement')
+    template_name = 'secret/statementAdd.html'
+
+
+class statementAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
+    """
+    Admin, Statement Update Function, Class View: UpdateView
+    """
+    model = Statement
+    fields = ['status', ]
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:statement')
+
+
+class statementAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
+    """
+    Admin, Statement Delete Function, Class View: DeleteView
+    """
+    model = Statement
+    template_name = 'secret/contentID.html'
+    success_url = reverse_lazy('secret:statement')

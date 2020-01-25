@@ -7,7 +7,7 @@
     CLOCK: [2020-01-21 Sal 18:32]--[2020-01-21 Sal 18:53] =>  0:21
     CLOCK: [2020-01-21 Sal 18:02]--[2020-01-21 Sal 18:27] =>  0:25
     :END:
-* TODO Admin Panel[3/5]
+* TODO Admin Panel[4/5]
 ** DONE Add Admin Panel
    CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
    :LOGBOOK:
@@ -30,9 +30,10 @@
    :LOGBOOK:
    CLOCK: [2020-01-23 Prş 16:27]--[2020-01-23 Prş 16:48] =>  0:21
    :END:
-** TODO Add Statistic
-   SCHEDULED: <2020-01-23 Prş>
+** DONE Add Statistic
+   CLOSED: [2020-01-24 Cum 19:21] SCHEDULED: <2020-01-23 Prş>
    :LOGBOOK:
+   CLOCK: [2020-01-24 Cum 17:08]--[2020-01-24 Cum 19:21] =>  2:13
    CLOCK: [2020-01-23 Prş 17:11]--[2020-01-23 Prş 18:03] =>  0:52
    :END:
 ** TODO Add Statements
