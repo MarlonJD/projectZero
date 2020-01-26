@@ -389,6 +389,7 @@
 	     this.filesLoading = []
 	     var form = this.$refs["form"]
 	     var formData = new FormData(form);
+	     formData.append('splitPay', JSON.stringify(this.rows));
 	     
 	     axios
 		 .post('/trackUpload/',formData,{
@@ -440,7 +441,7 @@
 	     formData0.append('releaseDate', this.media.releaseDate);
 	     formData0.append('tracks', JSON.stringify(this.filesLoad));
 	     formData0.append('platforms', JSON.stringify(this.media.platforms));
-	     formData0.append('splitPay', JSON.stringify(this.rows));
+
 	     axios
 		 .post('/distribution/add/',
 		       formData0,
