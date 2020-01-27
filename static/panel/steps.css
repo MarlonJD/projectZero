@@ -5,8 +5,9 @@
 .multi-step-list {
   position: relative;
   display: flex;
-  max-height: 5.2em;
+  display: -webkit-flex;
   flex-direction: row;
+  -webkit-flex-direction: row;
   justify-content: space-between;
   list-style-type: none;
   padding: 0; }
