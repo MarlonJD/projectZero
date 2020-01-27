@@ -101,7 +101,7 @@
 				    v-model="files"
 				    placeholder="{% trans 'Choose...' %}"
 				    drop-placeholder="{% trans 'Drop file here...' %}"
-				    accept="audio/*, video/*"
+				    accept="audio/x-wav"
 				    multiple>
 				    <template slot="file-name" slot-scope="{ names }">
 					<b-badge>[[ names[0] ]]</b-badge>
@@ -159,7 +159,9 @@
 					    @change="onFileChange"
 					    placeholder="{% trans 'Choose...' %}"
 					    drop-placeholder="{% trans 'Drop file here...' %}"
-					    accept="image/*">
+					    aria-describedby="input-cover-help"
+					    accept="image/jpeg"
+					>
 					    <template slot="file-name" slot-scope="{ names }">
 						<b-badge>[[ names[0] ]]</b-badge>
 						<b-badge v-if="names.length > 1" class="ml-1">
@@ -167,6 +169,7 @@
 						</b-badge>
 					    </template>
 					</b-form-file>
+					<b-form-text id="input-live-help">Your cover image should at least 300px x 300px</b-form-text>
 				    </div>
 				</div>
 				<div class="form-group col-6">
@@ -196,7 +199,7 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaReleaseDate">Release Date</label>
-				    <b-form-input type="date" v-model="media.releaseDate" :placeholder="'Select date when you want to release ' + selectText"></b-form-input>
+				    <b-form-input type="date" v-model="media.releaseDate" :placeholder="'Select date when you want to release ' + selectText" min="{{ 2weekLater|date:"Y-m-d" }}" ></b-form-input>
 				</div>
 			    </form>
 			</div>
@@ -328,7 +331,7 @@
 	     genre: null,
 	     subGenre: null,
 	     recordLabel: null,
-	     releaseDate: null,
+	     releaseDate: "{{ 2weekLater|date:"Y-m-d" }}",
 	     platforms:  [],
 	     featuredPlatforms: [],
 	 }, 
