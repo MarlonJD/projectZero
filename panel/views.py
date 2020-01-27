@@ -5,6 +5,9 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
+from django.db.models import Sum
+from datetime import timedelta, date
+from django.db.models.functions import Coalesce
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, ListView, TemplateView
 from .models import (Album, Artist, Track, Platform,
@@ -18,6 +21,33 @@ class indexUserTemplateView(LoginRequiredMixin, TemplateView):
     Panel Home Page (Dashboard) Page Class View
     '''
     template_name = "panel/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            artistObj = Artist.objects.get(user=self.request.user)
+        except Artist.DoesNotExist:
+            artistObj = None
+
+        try:
+            albumObj = Album.objects.filter(artist=artistObj)
+        except Album.DoesNotExist:
+            albumObj = None
+
+        statisticObj = Statistic.objects.filter(album__in=albumObj).aggregate(
+            steam_total=Coalesce(Sum('stream'), 0))
+        statisticObj1 = Statistic.objects.filter(album__in=albumObj).aggregate(
+            revenue_total=Coalesce(Sum('revenue'), 0))
+        lastAlbum = Album.objects.filter(artist=artistObj).latest('releaseDate')
+
+        context['latest'] = lastAlbum
+        context['stream_total'] = statisticObj['steam_total']
+        context['revenue_total'] = statisticObj1['revenue_total']
+        context['album_count'] = Album.objects.filter(artist=artistObj).count()
+        context['album_confirmed_count'] = Album.objects.filter(
+            artist=artistObj).filter(status=2).count()
+
+        return context
 
 
 '''
@@ -91,9 +121,12 @@ def addDistUserView(request):
         except Artist.DoesNotExist:
             artistObj = None
 
+        twoWeekLater = date.today() + timedelta(days=15)
+
         return render(request, 'panel/addDist.html',
                       {'platforms': Platform.objects.all,
-                       'artist': artistObj})
+                       'artist': artistObj,
+                       '2weekLater': twoWeekLater})
 
 
 # Slug generator on model

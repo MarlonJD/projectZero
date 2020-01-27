@@ -5,6 +5,7 @@
 .multi-step-list {
   position: relative;
   display: flex;
+  max-height: 5.2em;
   flex-direction: row;
   justify-content: space-between;
   list-style-type: none;
