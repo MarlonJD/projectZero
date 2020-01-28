@@ -199,7 +199,7 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaReleaseDate">Release Date</label>
-				    <b-form-input type="date" v-model="media.releaseDate" :placeholder="'Select date when you want to release ' + selectText" min="{{ 2weekLater|date:"Y-m-d" }}" ></b-form-input>
+				    <v-date-picker :input-props='{input: ["L", "DD-MM-YYYY"], placeholder: "DD-MM-YYYY - DD-MM-YYYY"}' color="purple" v-model='media.releaseDate' :min-date='new Date("{{ 2weekLater|date:"Y-m-d" }}")' />
 				</div>
 			    </form>
 			</div>
@@ -227,17 +227,17 @@
 			    </b-form-group>
 
 			    <!--
-			    <h6 class="card-subtitle mb-2 text-muted">Select if you want to promate these platforms</h6>
-			    <b-form-group>
-				<div class="row pl-3 pt-2">
-				    <b-form-checkbox class="col-3"
-						     v-model="media.featuredPlatforms"
-						     v-for="(platform, index) in mediaFeaturedPlatformsOptions"
-						     :value="platform.value"
-						     switch>[[ platform.text ]]
-				    </b-form-checkbox>
-				</div>
-			    </b-form-group>
+				 <h6 class="card-subtitle mb-2 text-muted">Select if you want to promate these platforms</h6>
+				 <b-form-group>
+				 <div class="row pl-3 pt-2">
+				 <b-form-checkbox class="col-3"
+				 v-model="media.featuredPlatforms"
+				 v-for="(platform, index) in mediaFeaturedPlatformsOptions"
+				 :value="platform.value"
+				 switch>[[ platform.text ]]
+				 </b-form-checkbox>
+				 </div>
+				 </b-form-group>
 			    -->
 			</div>
 		    </div>
@@ -293,6 +293,8 @@
 {% endblock %}
 
 {% block script %}
+<script src='https://unpkg.com/v-calendar@next'></script>
+
 <script>
  Vue.directive('$model', {
      bind: function (el, binding, vnode) {
@@ -331,7 +333,7 @@
 	     genre: null,
 	     subGenre: null,
 	     recordLabel: null,
-	     releaseDate: "{{ 2weekLater|date:"Y-m-d" }}",
+	     releaseDate: new Date('{{ 2weekLater|date:"Y-m-d" }}'),
 	     platforms:  [],
 	     featuredPlatforms: [],
 	 }, 
@@ -441,7 +443,7 @@
 	     formData0.append('genre', this.media.genre);
 	     formData0.append('subGenre', this.media.subGenre);
 	     formData0.append('recordLabel', this.media.recordLabel);
-	     formData0.append('releaseDate', this.media.releaseDate);
+	     formData0.append('releaseDate', this.media.releaseDate.toISOString().split('T')[0]);
 	     formData0.append('tracks', JSON.stringify(this.filesLoad));
 	     formData0.append('platforms', JSON.stringify(this.media.platforms));
 
