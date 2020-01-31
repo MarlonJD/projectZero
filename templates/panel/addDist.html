@@ -62,7 +62,13 @@
 			    </h5>
 			    <h6 class="card-subtitle mb-2 text-muted">Please add your tracks</h6>
 			    <div v-if="filesLoad.length > 0">
-				<b-table striped hover :items="filesLoad"></b-table>
+				<b-table striped hover :items="filesLoad" :fields="filesFields">
+				    <template v-slot:cell(split)="data">
+					<span v-for="d in data.value">
+					    <b-badge>[[ d.artist ]] %[[ d.rate ]]</small></b-badge>
+					</span>
+				    </template>
+				</b-table>
 			    </div>
 			    <div v-else>
 				<div class="alert alert-warning" role="alert">
@@ -82,11 +88,6 @@
 			    @ok="handleOk"
 		    >
 			<form ref="form" @submit.stop.prevent="handleSubmit">
-			    <div class="form-group">
-				<label for="number">Track Number</label>
-				<input type="number" class="form-control" id="number" name="number" aria-describedby="numberHelp">
-				<small id="numberHelp" class="form-text text-muted">This is the album track number</small>
-			    </div>
 			    <div class="form-group">
 				<label for="name">Track Title</label>
 				<input type="text" class="form-control" id="name" name="name">
@@ -198,8 +199,10 @@
 				    <b-form-input v-model="media.recordLabel" :placeholder="selectText + 'Record Label'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
-				    <label for="mediaReleaseDate">Release Date</label>
+				    <label for="mediaReleaseDate">Release Date <i id="input-date-help" class="mdi mdi-help"></i></label>
+				    <b-tooltip target="input-date-help">Release data can be at least after 2-weeks</b-tooltip>
 				    <v-date-picker :input-props='{input: ["L", "DD-MM-YYYY"], placeholder: "DD-MM-YYYY - DD-MM-YYYY"}' color="purple" v-model='media.releaseDate' :min-date='new Date("{{ 2weekLater|date:"Y-m-d" }}")' />
+				    
 				</div>
 			    </form>
 			</div>
@@ -268,7 +271,13 @@
 				<b-col cols="6">
 				    <h6>Tracks</h6>
 				    <div v-if="filesLoad.length > 0">
-					<b-table striped hover :items="filesLoad" :fields="filesFields"></b-table>
+					<b-table striped hover :items="filesLoad" :fields="filesFields">
+					    <template v-slot:cell(split)="data">
+						<span v-for="d in data.value">
+						    <b-badge>[[ d.artist ]] %[[ d.rate ]]</small></b-badge>
+						</span>
+					    </template>
+					</b-table>
 				    </div>
 				    <div v-else>
 					<div class="alert alert-warning" role="alert">
@@ -314,7 +323,7 @@
 	 files: null,
 	 filesLoading: [],
 	 filesLoad: [],
-	 filesFields: ['number', 'name', 'size'],
+	 filesFields: ['name', 'fileName', 'size', 'split'],
 	 name: '',
          nameState: null,
          submittedNames: [],

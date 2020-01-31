@@ -85,7 +85,7 @@ class Track(models.Model):
             media is the FILE
             otherArtists is OtherArtist for split paying
     """
-    number = models.IntegerField()
+    # number = models.IntegerField()
     name = models.CharField(max_length=150)
     media = models.FileField(upload_to='tracks')
     OtherArtists = models.ManyToManyField(OtherArtist,
