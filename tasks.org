@@ -10,7 +10,7 @@
     :END:
 ** DONE Remove Track Number from Add Dist Page
    CLOSED: [2020-02-01 Cts 16:58]
-* TODO Admin Panel[6/7]
+* TODO Admin Panel[7/9]
 ** DONE Add Admin Panel
    CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
    :LOGBOOK:
@@ -47,6 +47,13 @@
    :LOGBOOK:
    CLOCK: [2020-02-01 Cts 16:58]--[2020-02-01 Cts 17:12] =>  0:14
    :END:
+** DONE Add Genre CRUD
+   CLOSED: [2020-02-01 Cts 19:08] SCHEDULED: <2020-02-01 Cts>
+   :LOGBOOK:
+   CLOCK: [2020-02-01 Cts 17:52]--[2020-02-01 Cts 19:08] =>  1:16
+   :END:
+** TODO Add Annoucement CRUD
+   SCHEDULED: <2020-02-01 Cts>
 * TODO Label Panel[0/3] 
 ** TODO Add Label Panel
 ** TODO Unlock Artist Name

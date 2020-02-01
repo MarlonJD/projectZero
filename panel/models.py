@@ -140,8 +140,7 @@ class Album(models.Model):
     title = models.CharField(max_length=150)
     artwork = models.ImageField(upload_to='media/cover')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    genre = models.CharField(max_length=50)
-    subgenre = models.CharField(max_length=50, null=True)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
     recordLabel = models.CharField(max_length=150)
     releaseDate = models.DateField()
     platforms = models.ManyToManyField(Platform,

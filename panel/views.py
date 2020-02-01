@@ -8,12 +8,11 @@ from django.utils.crypto import get_random_string
 from django.db.models import Sum
 from datetime import timedelta, date
 from django.db.models.functions import Coalesce
-from django.core.serializers import serialize
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, ListView, TemplateView
 from .models import (Album, Artist, Track, Platform,
                      ContentID, Statistic, Statement,
-                     OtherArtist)
+                     OtherArtist, Genre)
 import json
 
 
@@ -84,7 +83,6 @@ def addDistUserView(request):
         title = request.POST['title']
         artist = request.POST['artist']
         genre = request.POST['genre']
-        subGenre = request.POST['subGenre']
         recordLabel = request.POST['recordLabel']
         releaseDate = request.POST['releaseDate']
         cover = request.FILES['cover']
@@ -94,12 +92,13 @@ def addDistUserView(request):
         artistObj = Artist.objects.get_or_create(user=request.user,
                                                  name=artist)[0]
 
+        genreObj = Genre.objects.get(pk=genre)
+
         albumObj = Album.objects.create(mediaType=mType,
                                         title=title,
                                         artwork=cover,
                                         artist=artistObj,
-                                        genre=genre,
-                                        subgenre=subGenre,
+                                        genre=genreObj,
                                         recordLabel=recordLabel,
                                         releaseDate=releaseDate)
 

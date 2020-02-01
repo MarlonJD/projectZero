@@ -190,13 +190,17 @@
 			            {% endif %}
 			            {% endif %}
 				</div>
-				<div class="form-group col-6">
-				    <label for="mediaGenre">Genre</label>
-				    <b-form-input v-model="media.genre" placeholder="Genre"></b-form-input>
-				</div>
-				<div class="form-group col-6">
-				    <label for="mediaSubGenre">Subgenre</label>
-				    <b-form-input v-model="media.subGenre" placeholder="Subgenre"></b-form-input>
+				<div class="col-12 mb-4">		    
+				    <label for="id_genre">{% trans 'Genre' %}:</label>
+				    <treeselect
+					v-model="media.genre"
+					:options="genres"
+					:disable-branch-nodes="true"
+					:show-count="true"
+					placeholder="{% trans 'Select Genre...' %}"
+					:normalizer="normalizer"
+				    >
+					<treeselect/>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaRecordLabel">Record Label</label>
@@ -307,8 +311,10 @@
 
 {% block script %}
 <script src='https://unpkg.com/v-calendar@next'></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@riophae/vue-treeselect@0.0.38/dist/vue-treeselect.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@riophae/vue-treeselect@0.0.38/dist/vue-treeselect.min.css">
 <script>
+ Vue.component('treeselect', VueTreeselect.Treeselect)
  Vue.directive('$model', {
      bind: function (el, binding, vnode) {
 	 el.oninput = () => (vnode.context[binding.expression] = el.value)
@@ -319,6 +325,14 @@
      delimiters: ['[[', ']]'],
      el: '#app',
      data: {
+	 genres: [],
+	 normalizer(node) {
+             return {
+		 id: node.id,
+		 label: node.name,
+		 children: node.children,
+             }
+	 },
 	 step: 1,
 	 error1: false,
 	 error2: false,
@@ -329,8 +343,8 @@
 	 filesLoad: [],
 	 filesFields: ['name', 'fileName', 'size', 'split'],
 	 name: '',
-         nameState: null,
-         submittedNames: [],
+	 nameState: null,
+	 submittedNames: [],
 	 coverUrl: null,
 	 rows: [
 	     {
@@ -350,26 +364,39 @@
 	     platforms:  [],
 	     featuredPlatforms: [],
 	 }, 
-         mediaTypeOptions: [
+	 mediaTypeOptions: [
 	     { value: null, text: 'Please select an option', disabled: true },
 	     { value: 0, text: '{% trans 'Single'|escapejs %}' },
 	     { value: 1, text: '{% trans 'EP'|escapejs %}' },
 	     { value: 2, text: '{% trans 'Album'|escapejs %}' }
-         ],	 
+	 ],	 
 	 mediaPlatformsOptions: [
 	     {% for platform in platforms %}
 	     { value:{{ platform.id|escapejs }}, text:'{{ platform.name|escapejs }}' },
 	     {% endfor %}
-         ],
+	 ],
 	 mediaFeaturedPlatformsOptions: [
 	     { value: 0, text:  'iTunes' },
-             { value: 1, text:  'Spotify' },
+	     { value: 1, text:  'Spotify' },
 	 ]
      },
      mounted() {
-	 
+	 this.getGenres();
      },
      methods: {
+	 getGenres() {
+             axios
+		 .get('/api/genre/')
+		 .then(response => {
+		     console.log(JSON.stringify(response.data));
+		     this.genres = response.data;
+		 })
+		 .catch(error => {
+		     console.log(error)
+		     this.makeToast('danger', 'Error', error);
+		     return false
+		 })
+	 },
 	 prev() {
 	     this.step--;
 	 },
@@ -377,13 +404,13 @@
 	     this.step++;
 	 },
 	 checkFormValidity() {
-             const valid = this.$refs.form.checkValidity()
-             this.nameState = valid ? 'valid' : 'invalid'
-             return valid
+	     const valid = this.$refs.form.checkValidity()
+	     this.nameState = valid ? 'valid' : 'invalid'
+	     return valid
 	 },
 	 resetModal() {
-             this.name = ''
-             this.nameState = null
+	     this.name = ''
+	     this.nameState = null
 	     this.rows = [
 		 {
 		     email: null,
@@ -392,17 +419,17 @@
 	     ]
 	 },
 	 handleOk(bvModalEvt) {
-             // Prevent modal from closing
-             bvModalEvt.preventDefault()
-             // Trigger submit handler
-             this.handleSubmit()
+	     // Prevent modal from closing
+	     bvModalEvt.preventDefault()
+	     // Trigger submit handler
+	     this.handleSubmit()
 	 },
 	 handleSubmit() {
-             // Exit when the form isn't valid
-             if (!this.checkFormValidity()) {
+	     // Exit when the form isn't valid
+	     if (!this.checkFormValidity()) {
 		 return
-             }
-             // Push the name to submitted names
+	     }
+	     // Push the name to submitted names
 
 	     this.filesLoading = []
 	     var form = this.$refs["form"]
@@ -425,18 +452,18 @@
 		     this.makeToast('danger', 'Error', error.response.data.Message);
 		     return false
 		 })
-             // Hide the modal manually
-             this.$nextTick(() => {
+	     // Hide the modal manually
+	     this.$nextTick(() => {
 		 this.$refs.modal.hide()
-             })
+	     })
 	 },
 	 addRow: function() {
-             var elem = document.createElement('tr');
+	     var elem = document.createElement('tr');
 	     
-             this.rows.push({
+	     this.rows.push({
 		 email: "",
 		 rate: 0,
-             });
+	     });
 	 },
 	 removeElement: function(index) {
 	     if (this.rows.length > 1) {
@@ -448,8 +475,8 @@
 	     this.coverUrl = URL.createObjectURL(file);
 	 },
 	 submitForm(){
-             let formData0 = new FormData();
-             formData0.append('cover', this.media.cover);
+	     let formData0 = new FormData();
+	     formData0.append('cover', this.media.cover);
 	     formData0.append('mType', this.media.type);
 	     formData0.append('title', this.media.title);
 	     formData0.append('artist', this.media.artist);

@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserCreationForm, StatementForm
 from panel.models import (Album, ContentID, Statistic, Track, Platform,
-                          Statement)
+                          Statement, Genre)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -183,3 +183,26 @@ class statementAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
     model = Statement
     template_name = 'secret/contentID.html'
     success_url = reverse_lazy('secret:statement')
+
+
+class genreAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, Genre Page Class View: ListView
+    """
+    model = Genre
+    template_name = 'secret/genre.html'
+    fields = '__all__'
+
+
+class genreAdminCreateView(LoginRequiredMixin, CreateView):
+    '''
+    Panel, ContentID Request Page Class View
+    '''
+    success_url = reverse_lazy('secret:genre')
+    template_name = 'secret/genreAdd.html'
+    model = Genre
+    fields = '__all__'
+
+    # def form_valid(self, form):
+    #    form.instance.user = self.request.user
+    #    return super(contentIDUserRequestCreateView, self).form_valid(form)
