@@ -96,6 +96,16 @@ class Track(models.Model):
         return self.name
 
 
+class Genre(models.Model):
+    parent = models.ForeignKey('self', blank=True, null=True,
+                               related_name='subgenres',
+                               on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "%s" % (self.name)
+
+
 class Album(models.Model):
     """
     Album is Album(mediaType=mediaType, title=String, artist=Artist,
@@ -236,3 +246,22 @@ class Statement(models.Model):
 
     def __str__(self):
         return self.album.title
+
+
+'''
+-----------------------
+     Announcement Model
+-----------------------
+'''
+
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField(max_length=500)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+

@@ -179,12 +179,16 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaTitle">Artist Name</label>
+				    {% if user.is_superuser or user.is_stuff %}
+				        <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+				    {% else %}
 				    {% if artist.name %}
 					<b-form-input v-model="media.artist" placeholder="Main Artist Name" readonly></b-form-input>
 					<small id="artistHelp" class="form-text text-muted">Your artist name is default now. You cannot change</small>
                                     {% else %}
                                         <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
-                                    {% endif %}			    
+			            {% endif %}
+			            {% endif %}
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaGenre">Genre</label>
@@ -338,7 +342,7 @@
 	     type: null,
 	     cover: null,
 	     title: null,
-	     artist: '{{ artist.name|escapejs }}',
+	     artist: '{% if not user.is_superuser or user.is_stuff %}{% if artist %}{{ artist.name|escapejs }}{% endif %}{% endif %}',
 	     genre: null,
 	     subGenre: null,
 	     recordLabel: null,

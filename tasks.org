@@ -1,4 +1,5 @@
-* TODO User Panel[1/2]
+* DONE User Panel[2/2]
+  CLOSED: [2020-02-01 Cts 17:13]
 ** DONE Statements[2/2]
    CLOSED: [2020-01-21 Sal 19:03]
 *** DONE Add Statements Page
@@ -7,8 +8,9 @@
     CLOCK: [2020-01-21 Sal 18:32]--[2020-01-21 Sal 18:53] =>  0:21
     CLOCK: [2020-01-21 Sal 18:02]--[2020-01-21 Sal 18:27] =>  0:25
     :END:
-** TODO Remove Track Number from Add Dist Page
-* TODO Admin Panel[5/7]
+** DONE Remove Track Number from Add Dist Page
+   CLOSED: [2020-02-01 Cts 16:58]
+* TODO Admin Panel[6/7]
 ** DONE Add Admin Panel
    CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
    :LOGBOOK:
@@ -40,13 +42,19 @@
 ** DONE Add Statements
    CLOSED: [2020-01-31 Cum 19:34] SCHEDULED: <2020-01-23 Prş>
 ** TODO Add Statement for split pay
-** TODO Add addDist Page for Admin Panel
+** DONE Add addDist Page for Admin Panel
+   CLOSED: [2020-02-01 Cts 17:12] SCHEDULED: <2020-02-01 Cts>
+   :LOGBOOK:
+   CLOCK: [2020-02-01 Cts 16:58]--[2020-02-01 Cts 17:12] =>  0:14
+   :END:
 * TODO Label Panel[0/3] 
 ** TODO Add Label Panel
 ** TODO Unlock Artist Name
 ** TODO Fix Label Name
-* TODO General[1/3]
+* TODO General[3/3]
 ** DONE Remove Track Number
    CLOSED: [2020-01-31 Cum 19:40] SCHEDULED: <2020-01-31 Cum>
-** TODO Add Genre Model
-** TODO Add Announcement Model
+** DONE Add Genre Model
+   CLOSED: [2020-02-01 Cts 17:48] SCHEDULED: <2020-02-01 Cts>
+** DONE Add Announcement Model
+   CLOSED: [2020-02-01 Cts 17:48] SCHEDULED: <2020-02-01 Cts>
