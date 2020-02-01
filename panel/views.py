@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.views.generic import CreateView, ListView, TemplateView
 from .models import (Album, Artist, Track, Platform,
                      ContentID, Statistic, Statement,
-                     OtherArtist)
+                     OtherArtist, Genre)
 import json
 
 
@@ -83,7 +83,6 @@ def addDistUserView(request):
         title = request.POST['title']
         artist = request.POST['artist']
         genre = request.POST['genre']
-        subGenre = request.POST['subGenre']
         recordLabel = request.POST['recordLabel']
         releaseDate = request.POST['releaseDate']
         cover = request.FILES['cover']
@@ -93,12 +92,13 @@ def addDistUserView(request):
         artistObj = Artist.objects.get_or_create(user=request.user,
                                                  name=artist)[0]
 
+        genreObj = Genre.objects.get(pk=genre)
+
         albumObj = Album.objects.create(mediaType=mType,
                                         title=title,
                                         artwork=cover,
                                         artist=artistObj,
-                                        genre=genre,
-                                        subgenre=subGenre,
+                                        genre=genreObj,
                                         recordLabel=recordLabel,
                                         releaseDate=releaseDate)
 
@@ -151,13 +151,15 @@ def trackUploadUser(request):
     Panel, Add Distribution Page: Media (Track) Uploader Helper Function
     '''
 
-    number = request.POST['number']
+    # number = request.POST['number']
     name = request.POST['name']
     splitPays = json.loads(request.POST['splitPay'])
 
-    t = Track.objects.create(number=number,
+    t = Track.objects.create(  # number=number,
                              name=name,
                              media=request.FILES['media'])
+
+    splitResponse = []
 
     if splitPays[0]['email']:
         for s in splitPays:
@@ -179,13 +181,17 @@ def trackUploadUser(request):
                                                         artist=tempArtist,
                                                         rate=s['rate'])
             t.OtherArtists.add(otherArtistObj)
+            splitResponse.append({"artist": tempArtist.user.email,
+                                  "rate": s['rate']})
 
     return JsonResponse({"id": t.id,
-                         "number": '#' + str(t.number),
+                         # "number": '#' + str(t.number),
                          "name": t.name,
                          "fileName": t.media.name,
                          "url": t.media.url,
-                         "size": str(round((t.media.size / 1048576), 2)) + ' MB'},
+                         "split": splitResponse,
+                         "size": str(round((t.media.size / 1048576), 2)) +
+                         ' MB'},
                         status=200)
 
 

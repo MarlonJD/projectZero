@@ -39,4 +39,8 @@ urlpatterns = [
          name='statement-update'),
     path('statement/delete/<pk>/', views.statementAdminDeleteView.as_view(),
          name='statement-delete'),
+    path('genre/', views.genreAdminListView.as_view(),
+         name='genre'),
+    path('genre/add/', views.genreAdminCreateView.as_view(),
+         name='addGenre'),
 ]

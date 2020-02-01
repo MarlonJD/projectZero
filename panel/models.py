@@ -85,7 +85,7 @@ class Track(models.Model):
             media is the FILE
             otherArtists is OtherArtist for split paying
     """
-    number = models.IntegerField()
+    # number = models.IntegerField()
     name = models.CharField(max_length=150)
     media = models.FileField(upload_to='tracks')
     OtherArtists = models.ManyToManyField(OtherArtist,
@@ -94,6 +94,16 @@ class Track(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Genre(models.Model):
+    parent = models.ForeignKey('self', blank=True, null=True,
+                               related_name='subgenres',
+                               on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return "%s" % (self.name)
 
 
 class Album(models.Model):
@@ -130,8 +140,7 @@ class Album(models.Model):
     title = models.CharField(max_length=150)
     artwork = models.ImageField(upload_to='media/cover')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    genre = models.CharField(max_length=50)
-    subgenre = models.CharField(max_length=50, null=True)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
     recordLabel = models.CharField(max_length=150)
     releaseDate = models.DateField()
     platforms = models.ManyToManyField(Platform,
@@ -236,3 +245,22 @@ class Statement(models.Model):
 
     def __str__(self):
         return self.album.title
+
+
+'''
+-----------------------
+     Announcement Model
+-----------------------
+'''
+
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField(max_length=500)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
