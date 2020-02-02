@@ -1,5 +1,4 @@
-* DONE User Panel[2/2]
-  CLOSED: [2020-02-01 Cts 17:13]
+* TODO User Panel[2/3]
 ** DONE Statements[2/2]
    CLOSED: [2020-01-21 Sal 19:03]
 *** DONE Add Statements Page
@@ -10,7 +9,8 @@
     :END:
 ** DONE Remove Track Number from Add Dist Page
    CLOSED: [2020-02-01 Cts 16:58]
-* TODO Admin Panel[7/9]
+** TODO Fix Dashboard
+* TODO Admin Panel[8/10]
 ** DONE Add Admin Panel
    CLOSED: [2020-01-21 Sal 19:20] SCHEDULED: <2020-01-22 Çrş>
    :LOGBOOK:
@@ -52,12 +52,18 @@
    :LOGBOOK:
    CLOCK: [2020-02-01 Cts 17:52]--[2020-02-01 Cts 19:08] =>  1:16
    :END:
-** TODO Add Annoucement CRUD
-   SCHEDULED: <2020-02-01 Cts>
-* TODO Label Panel[0/3] 
-** TODO Add Label Panel
+** DONE Add Annoucement CRUD
+   CLOSED: [2020-02-02 Paz 18:51] SCHEDULED: <2020-02-01 Cts>
+** TODO Fix Dashboard
+* TODO Label Panel[1/4] 
+** DONE Add Label Panel
+   CLOSED: [2020-02-02 Paz 17:46] SCHEDULED: <2020-02-02 Paz>
+   :LOGBOOK:
+   CLOCK: [2020-02-02 Paz 17:26]--[2020-02-02 Paz 17:46] =>  0:20
+   :END:
 ** TODO Unlock Artist Name
 ** TODO Fix Label Name
+** TODO Add Dashboard
 * TODO General[3/3]
 ** DONE Remove Track Number
    CLOSED: [2020-01-31 Cum 19:40] SCHEDULED: <2020-01-31 Cum>

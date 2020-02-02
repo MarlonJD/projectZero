@@ -21,7 +21,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admin/doc/', include('django.contrib.admindocs.urls')),
     # path('', include('django.contrib.auth.urls')),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('passwordReset/', auth_views.PasswordResetView.as_view(),
@@ -29,4 +28,5 @@ urlpatterns = [
     path('', include('panel.urls')),
     path('secret/', include('secret.urls')),
     path('api/', include('api.urls')),
+    path('label/', include('label.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

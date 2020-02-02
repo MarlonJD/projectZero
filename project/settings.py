@@ -32,8 +32,10 @@ try:
 except KeyError:
     DEBUG = True
 
-
-ALLOWED_HOSTS = ['.herokuapp.com', ]
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ['.herokuapp.com', ]
 
 
 # Application definition
@@ -53,7 +55,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'api.apps.ApiConfig',
     'panel.apps.PanelConfig',
-    'secret.apps.SecretConfig'
+    'secret.apps.SecretConfig',
+    'label.apps.LabelConfig'
 ]
 
 MIDDLEWARE = [
