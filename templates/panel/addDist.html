@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:addDist' %}"><i class="mdi mdi-plus"></i>New Distribution</a>
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'panel:addDist' %}"><i class="mdi mdi-plus"></i>{% trans "New Distribution" %}</a>
             </li>
         </ul>
     </nav>
@@ -27,26 +27,26 @@
 		    <ul class="multi-step-list">
 			<li class="multi-step-item active" @click="step = 1" v-bind:class="{current: step === 1, completed: step === 2 | step === 3 | step === 4 & error1 === false , error: error1 }">
 			    <div class="item-wrap">
-				<p class="item-title">Step One</p>
-				<p class="item-subtitle">Tracks</p>
+				<p class="item-title">{% trans "Step One" %}</p>
+				<p class="item-subtitle">{% trans "Tracks" %}</p>
 			    </div>
 			</li>
 			<li class="multi-step-item active" @click="step = 2" v-bind:class="{current: step === 2, completed: step === 3 | step === 4 & error2 === false , error: error2 }">
 			    <div class="item-wrap">
-				<p class="item-title">Step Two</p>
-				<p class="item-subtitle">Details</p>
+				<p class="item-title">{% trans "Step Two" %}</p>
+				<p class="item-subtitle">{% trans "Details" %}</p>
 			    </div>
 			</li>
 			<li class="multi-step-item active" @click="step = 3" v-bind:class="{current: step === 3, completed: step === 4 & error3 === false , error: error3}">
 			    <div class="item-wrap">
-				<p class="item-title">Step Three</p>
-				<p class="item-subtitle">Partners</p>
+				<p class="item-title">{% trans "Step Three" %}</p>
+				<p class="item-subtitle">{% trans "Partners" %}</p>
 			    </div>
 			</li>
 			<li class="multi-step-item active" @click="step = 4" v-bind:class="{current: step === 4 & error4 === false , error: error4}">
 			    <div class="item-wrap">
-				<p class="item-title">Step Four</p>
-				<p class="item-subtitle">Preview</p>
+				<p class="item-title">{% trans "Step Four" %}</p>
+				<p class="item-subtitle">{% trans "Preview" %}</p>
 			    </div>
 			</li>
 		    </ul>
@@ -55,12 +55,12 @@
 		<div v-if="step === 1">
 		    <div class="card mb-4">
 			<div class="card-body">
-			    <h5 class="card-title">Tracks
+			    <h5 class="card-title">{% trans "Tracks" %}
 				<a href="#" v-b-modal.modal-prevent-closing class="btn btn-sm btn-gradient-info float-right">
-				    <i class="mdi mdi-plus"></i>Add Track
+				    <i class="mdi mdi-plus"></i>{% trans "Add Track" %}
 				</a>
 			    </h5>
-			    <h6 class="card-subtitle mb-2 text-muted">Please add your tracks</h6>
+			    <h6 class="card-subtitle mb-2 text-muted">{% trans "Please add your tracks" %}</h6>
 			    <div v-if="filesLoad.length > 0">
 				<b-table striped hover :items="filesLoad" :fields="filesFields">
 				    <template v-slot:cell(split)="data">
@@ -89,12 +89,12 @@
 		    >
 			<form ref="form" @submit.stop.prevent="handleSubmit">
 			    <div class="form-group">
-				<label for="name">Track Title</label>
+				<label for="name">{% trans "Track Title" %}</label>
 				<input type="text" class="form-control" id="name" name="name">
 			    </div>
 
 			    <div class="form-group">
-				<label for="name">Media File</label>
+				<label for="name">{% trans "Media File" %}</label>
 				<b-form-file
 				    lang="{% get_current_language as LANG_CODE %}{{LANG_CODE}}"
 				    id="media"
@@ -114,7 +114,7 @@
 			    </div>
 
 			    <div class="form-group">
-				<label for="name">Split Pay</label>
+				<label for="name">{% trans "Split Pay" %}</label>
 				<table class="table col">
 				    <tbody>
 					<tr v-for="(row, index) in rows">
@@ -135,24 +135,24 @@
 
 			</form>
 		    </b-modal>
-		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
+		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">{% trans "Next" %}</button>
 		</div>
 		
 		<div v-if="step === 2">
 		    <div class="card mb-2">
 			<div class="card-body">
-			    <h5 class="card-title">Distribution Details
+			    <h5 class="card-title">{% trans "Distribution Details" %}
 			    </h5>
-			    <h6 class="card-subtitle text-muted">Please fill the form</h6>
+			    <h6 class="card-subtitle text-muted">{% trans "Please fill the form" %}</h6>
 			    <form class="row">
 				<div class="form-group col-6">
-				    <label for="exampleInputEmail1">Media Type</label>
+				    <label for="exampleInputEmail1">{% trans "Media Type" %}</label>
 				    <b-form-select v-model="media.type" :options="mediaTypeOptions"></b-form-select>
-				    <small id="emailHelp" class="form-text text-muted">Select media type ie. Single, EP, Album</small>
+				    <small id="emailHelp" class="form-text text-muted">{% trans "Select media type ie. Single, EP, Album" %}</small>
 				</div>
 				<div class="form-group col-6">
 				    <div class="form-group">
-					<label for="name">[[ selectText ]] Cover</label>
+					<label for="name">[[ selectText ]] {% trans "Cover" %}</label>
 					<b-form-file
 					    lang="{% get_current_language as LANG_CODE %}{{LANG_CODE}}"
 					    v-model="media.cover"
@@ -170,23 +170,23 @@
 						</b-badge>
 					    </template>
 					</b-form-file>
-					<b-form-text id="input-live-help">Your cover image should at least 300px x 300px</b-form-text>
+					<b-form-text id="input-live-help">{% trans "Your cover image should at least 300px x 300px" %}</b-form-text>
 				    </div>
 				</div>
 				<div class="form-group col-6">
-				    <label for="mediaTitle">Title</label>
-				    <b-form-input v-model="media.title" :placeholder="'Your ' + selectText  + 'title'"></b-form-input>
+				    <label for="mediaTitle">{% trans "Title" %}</label>
+				    <b-form-input v-model="media.title" :placeholder="selectText  + '{% trans "Title" %}'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
-				    <label for="mediaTitle">Artist Name</label>
+				    <label for="mediaTitle">{% trans "Artist Name" %}</label>
 				    {% if user.is_superuser or user.is_stuff %}
-				        <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+				        <b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}"></b-form-input>
 				    {% else %}
 				    {% if artist.name %}
-					<b-form-input v-model="media.artist" placeholder="Main Artist Name" readonly></b-form-input>
-					<small id="artistHelp" class="form-text text-muted">Your artist name is default now. You cannot change</small>
+					<b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}" readonly></b-form-input>
+					<small id="artistHelp" class="form-text text-muted">{% trans "Your artist name is default now. You cannot change" %}</small>
                                     {% else %}
-                                        <b-form-input v-model="media.artist" placeholder="Main Artist Name"></b-form-input>
+                                        <b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}"></b-form-input>
 			            {% endif %}
 			            {% endif %}
 				</div>
@@ -203,12 +203,12 @@
 					<treeselect/>
 				</div>
 				<div class="form-group col-6">
-				    <label for="mediaRecordLabel">Record Label</label>
-				    <b-form-input v-model="media.recordLabel" :placeholder="selectText + 'Record Label'"></b-form-input>
+				    <label for="mediaRecordLabel">{% trans "Record Label" %}</label>
+				    <b-form-input v-model="media.recordLabel" :placeholder="selectText + '{% trans "Record Label" %}'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
-				    <label for="mediaReleaseDate">Release Date <i id="input-date-help" class="mdi mdi-help"></i></label>
-				    <b-tooltip target="input-date-help">Release data can be at least after 2-weeks</b-tooltip>
+				    <label for="mediaReleaseDate">{% trans "Release Date" %} <i id="input-date-help" class="mdi mdi-help"></i></label>
+				    <b-tooltip target="input-date-help">{% trans "Release data can be at least after 2-weeks" %}</b-tooltip>
 				    <v-date-picker :input-props='{input: ["L", "DD-MM-YYYY"], placeholder: "DD-MM-YYYY - DD-MM-YYYY"}' color="purple" v-model='media.releaseDate' :min-date='new Date("{{ 2weekLater|date:"Y-m-d" }}")' />
 				    
 				</div>
@@ -216,15 +216,15 @@
 			</div>
 		    </div>
 		    
-		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">Previous</button>
-		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
+		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">{% trans "Previous" %}</button>
+		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">{% trans "Next" %}</button>
 		</div>
 		<div v-if="step === 3">
 		    <div class="card mb-4">
 			<div class="card-body">
-			    <h5 class="card-title">Platforms
+			    <h5 class="card-title">{% trans "Platforms" %}
 			    </h5>
-			    <h6 class="card-subtitle mb-2 text-muted">Select which platforms that you want to release <span v-if="selectText">your [[ selectText ]]</span></h6>
+			    <h6 class="card-subtitle mb-2 text-muted">{% trans "Select which platforms that you want to release" %} <span v-if="selectText">your [[ selectText ]]</span></h6>
 			    
 			    <b-form-group>
 				<div class="row pl-3 pt-2">
@@ -253,13 +253,13 @@
 			</div>
 		    </div>
 		    
-		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">Previous</button>
-		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">Next</button>
+		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">{% trans "Previous" %}</button>
+		    <button class="float-right btn-lg btn-gradient-primary" @click.prevent="next()">{% trans "Next" %}</button>
 		</div>
 		<div v-if="step === 4">
 		    <div class="card mb-4">
 			<div class="card-body">
-			    <h5 class="card-title">Preview
+			    <h5 class="card-title">{% trans "Preview" %}
 			    </h5>
 			    <b-row>
 				<b-col cols="2">
@@ -269,15 +269,15 @@
 				    <h5>[[ media.title ]]</h5>
 				    <h6 class="text-muted">[[ media.artist ]]</h6>
 				    <b-list-group flush>
-					<br>Label:  [[media.recordLabel]]</br>
-					<br>Genre: [[media.genre]] [[media.subGenre]]</br>
-					<br>Release: [[ media.releaseDate ]]</br>
-					<br>Type: [[ selectText ]]</br>
-					<br>Platforms: [[ platformsText ]]</br>
+					<br>{% trans "Label" %}:  [[media.recordLabel]]</br>
+					<br>{% trans "Genre" %}: [[media.genre]] [[media.subGenre]]</br>
+					<br>{% trans "Release Date" %}: [[ media.releaseDate ]]</br>
+					<br>{% trans "Type" %}: [[ selectText ]]</br>
+					<br>{% trans "Platforms" %}: [[ platformsText ]]</br>
 				    </b-list-group>
 				</b-col>
 				<b-col cols="6">
-				    <h6>Tracks</h6>
+				    <h6>{% trans "Tracks" %}</h6>
 				    <div v-if="filesLoad.length > 0">
 					<b-table striped hover :items="filesLoad" :fields="filesFields">
 					    <template v-slot:cell(split)="data">
@@ -299,8 +299,8 @@
 			</div>
 		    </div>
 		    
-		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">Previous</button>
-		    <button class="float-right btn-lg btn-gradient-success" @click="submitForm">Save</button>
+		    <button class="float-left btn-lg btn-gradient-danger" @click.prevent="prev()">{% trans "Previous" %}</button>
+		    <button class="float-right btn-lg btn-gradient-success" @click="submitForm">{% trans "Save" %}</button>
 		</div>
 
             </div>
@@ -365,7 +365,7 @@
 	     featuredPlatforms: [],
 	 }, 
 	 mediaTypeOptions: [
-	     { value: null, text: 'Please select an option', disabled: true },
+	     { value: null, text: '{% trans "Please select an option" %}', disabled: true },
 	     { value: 0, text: '{% trans 'Single'|escapejs %}' },
 	     { value: 1, text: '{% trans 'EP'|escapejs %}' },
 	     { value: 2, text: '{% trans 'Album'|escapejs %}' }

@@ -64,10 +64,15 @@
 ** TODO Unlock Artist Name
 ** TODO Fix Label Name
 ** TODO Add Dashboard
-* TODO General[3/3]
+* TODO General[4/4]
 ** DONE Remove Track Number
    CLOSED: [2020-01-31 Cum 19:40] SCHEDULED: <2020-01-31 Cum>
 ** DONE Add Genre Model
    CLOSED: [2020-02-01 Cts 17:48] SCHEDULED: <2020-02-01 Cts>
 ** DONE Add Announcement Model
    CLOSED: [2020-02-01 Cts 17:48] SCHEDULED: <2020-02-01 Cts>
+** DONE Add i18n
+   CLOSED: [2020-02-02 Paz 19:55] SCHEDULED: <2020-02-02 Paz>
+   :LOGBOOK:
+   CLOCK: [2020-02-02 Paz 19:03]--[2020-02-02 Paz 19:55] =>  0:52
+   :END:
