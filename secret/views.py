@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import UserCreationForm, StatementForm
 from panel.models import (Album, ContentID, Statistic, Track, Platform,
-                          Statement, Genre)
+                          Statement, Genre, Announcement)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -145,6 +145,15 @@ def statisticAdminAddFunctionView(request):
         return render(request, 'secret/statisticAdd.html', params)
 
 
+class statisticAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
+    """
+    Admin, Statement Delete Function, Class View: DeleteView
+    """
+    model = Statistic
+    template_name = 'secret/statistic.html'
+    success_url = reverse_lazy('secret:statistic')
+
+
 class statementsAdminListView(AdminStaffRequiredMixin, ListView):
     """
     Admin, Statement Page Class View: ListView
@@ -196,13 +205,41 @@ class genreAdminListView(AdminStaffRequiredMixin, ListView):
 
 class genreAdminCreateView(LoginRequiredMixin, CreateView):
     '''
-    Panel, ContentID Request Page Class View
+    Admin, ContentID Request Page Class View
     '''
     success_url = reverse_lazy('secret:genre')
     template_name = 'secret/genreAdd.html'
     model = Genre
     fields = '__all__'
 
-    # def form_valid(self, form):
-    #    form.instance.user = self.request.user
-    #    return super(contentIDUserRequestCreateView, self).form_valid(form)
+
+class annoAdminListView(AdminStaffRequiredMixin, ListView):
+    """
+    Admin, Announcement Page Class View: ListView
+    """
+    model = Announcement
+    template_name = 'secret/anno.html'
+    fields = '__all__'
+
+
+class annoAdminCreateView(LoginRequiredMixin, CreateView):
+    '''
+    Admin, Announcement Request Page Class View
+    '''
+    success_url = reverse_lazy('secret:anno')
+    template_name = 'secret/annoAdd.html'
+    model = Announcement
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super(annoAdminCreateView, self).form_valid(form)
+
+
+class annoAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
+    """
+    Admin, Statement Delete Function, Class View: DeleteView
+    """
+    model = Announcement
+    template_name = 'secret/anno.html'
+    success_url = reverse_lazy('secret:anno')
