@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import UserCreationForm, StatementForm
+from .forms import UserCreationForm, StatementForm, AnnoForm
 from panel.models import (Album, ContentID, Statistic, Track, Platform,
                           Statement, Genre, Announcement)
 
@@ -228,8 +228,7 @@ class annoAdminCreateView(LoginRequiredMixin, CreateView):
     '''
     success_url = reverse_lazy('secret:anno')
     template_name = 'secret/annoAdd.html'
-    model = Announcement
-    fields = ['title', 'content']
+    form_class = AnnoForm
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
