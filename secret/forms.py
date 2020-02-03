@@ -5,13 +5,13 @@ from django.contrib.auth import (
 )
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.models import User
-from panel.models import Statement
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from django.forms.widgets import Widget
 from django.template import loader
 from django.utils.safestring import mark_safe
+from panel.models import Statement, Announcement
 
 UserModel = get_user_model()
 
@@ -95,7 +95,22 @@ class StatementForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'})
         }
+        labels = {
+            'album': _('Album'),
+            'revenue': _('Revenue'),
+            'date': _('Date')
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['album'].widget.attrs['class'] = 'custom-select'
+
+
+class AnnoForm(forms.ModelForm):
+    class Meta:
+        model = Announcement
+        fields = ['title', 'content']
+        labels = {
+            'title': _('Title'),
+            'content': _('Content')
+        }

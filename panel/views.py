@@ -10,6 +10,7 @@ from datetime import timedelta, date
 from django.db.models.functions import Coalesce
 from django.contrib.auth.models import User
 from django.views.generic import CreateView, ListView, TemplateView
+from .forms import ContentIDForm
 from .models import (Album, Artist, Track, Platform,
                      ContentID, Statistic, Statement,
                      OtherArtist, Genre)
@@ -220,8 +221,7 @@ class contentIDUserRequestCreateView(LoginRequiredMixin, CreateView):
     '''
     success_url = reverse_lazy('panel:contentID')
     template_name = 'panel/contentIDRequest.html'
-    model = ContentID
-    fields = ('title', 'url')
+    form_class = ContentIDForm
 
     def form_valid(self, form):
         form.instance.user = self.request.user

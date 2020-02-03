@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-02 16:52+0000\n"
+"POT-Creation-Date: 2020-02-03 13:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Burak Karahan <burak.karahan@mail.ru>\n"
 "Language-Team: tr_TR <LL@li.org>\n"
@@ -26,6 +26,18 @@ msgstr "Album bulunamadı"
 msgid "Please select an option"
 msgstr "Lütfen seçin"
 
+#: panel/forms.py:11 secret/forms.py:114 templates/panel/addDist.html:177
+#: templates/panel/addDist.html:178 templates/panel/contentID.html:31
+#: templates/panel/distribution.html:31 templates/secret/anno.html:32
+#: templates/secret/contentID.html:25 templates/secret/distribution.html:31
+msgid "Title"
+msgstr "Başlık"
+
+#: panel/forms.py:12 templates/panel/contentID.html:32
+#: templates/secret/contentID.html:26
+msgid "URL"
+msgstr "URL"
+
 #: panel/models.py:125 panel/models.py:172 panel/models.py:237
 #: templates/panel/contentID.html:41 templates/panel/distribution.html:48
 #: templates/panel/statement.html:36 templates/secret/contentID.html:37
@@ -35,7 +47,8 @@ msgid "Pending"
 msgstr "Bekliyor"
 
 #: panel/models.py:126 templates/panel/distribution.html:51
-#: templates/secret/distDetail.html:49 templates/secret/distribution.html:52
+#: templates/secret/distDetail.html:49 templates/secret/distDetail.html:105
+#: templates/secret/distribution.html:52
 msgid "in Progress"
 msgstr "İşlemde"
 
@@ -62,7 +75,7 @@ msgstr "Tekli"
 msgid "EP"
 msgstr "EP"
 
-#: panel/models.py:134 templates/panel/addDist.html:371
+#: panel/models.py:134 secret/forms.py:99 templates/panel/addDist.html:371
 #: templates/panel/statement.html:24 templates/panel/statistic.html:24
 #: templates/secret/statement.html:32 templates/secret/statistic.html:33
 msgid "Album"
@@ -101,6 +114,23 @@ msgstr "Şifre onayı"
 msgid "Enter the same password as before, for verification."
 msgstr "Doğrulama için öncekiyle aynı şifreyi girin."
 
+#: secret/forms.py:100 templates/panel/statement.html:25
+#: templates/panel/statistic.html:29 templates/secret/statement.html:33
+#: templates/secret/statisticAdd.html:65
+msgid "Revenue"
+msgstr "Kazanç"
+
+#: secret/forms.py:101 templates/panel/statement.html:26
+#: templates/panel/statistic.html:30 templates/secret/anno.html:35
+#: templates/secret/statement.html:34 templates/secret/statistic.html:39
+#: templates/secret/statisticAdd.html:71
+msgid "Date"
+msgstr "Tarih"
+
+#: secret/forms.py:115 templates/secret/anno.html:33
+msgid "Content"
+msgstr "İçerik"
+
 #: templates/label/_sidebar.html:20 templates/label/index.html:11
 #: templates/panel/_sidebar.html:21 templates/panel/index.html:11
 #: templates/secret/_sidebar.html:20 templates/secret/index.html:11
@@ -136,7 +166,8 @@ msgstr "Beyan"
 
 #: templates/label/_sidebar.html:56 templates/panel/addDist.html:194
 #: templates/panel/addDist.html:273 templates/secret/_sidebar.html:56
-#: templates/secret/genre.html:11 templates/secret/genreAdd.html:12
+#: templates/secret/distDetail.html:35 templates/secret/genre.html:11
+#: templates/secret/genreAdd.html:12
 msgid "Genre"
 msgstr "Tür"
 
@@ -153,12 +184,17 @@ msgstr "Kategori"
 msgid "Category Attribute"
 msgstr "Kategori Niteliği"
 
+#: templates/panel/addDist.html:15 templates/panel/distribution.html:15
+#: templates/secret/distDetail.html:15 templates/secret/distribution.html:15
+msgid "New Distribution"
+msgstr "Yeni Dağıtım"
+
 #: templates/panel/addDist.html:30
 msgid "Step One"
 msgstr "Adım Bir"
 
 #: templates/panel/addDist.html:31 templates/panel/addDist.html:58
-#: templates/panel/addDist.html:280
+#: templates/panel/addDist.html:280 templates/secret/distDetail.html:61
 msgid "Tracks"
 msgstr "Parçalar"
 
@@ -229,14 +265,10 @@ msgid "Next"
 msgstr "İleri"
 
 #: templates/panel/addDist.html:144
-#, fuzzy
-#| msgid "Distribution"
 msgid "Distribution Details"
-msgstr "Dağıtım"
+msgstr "Dağıtım Ayrıntıları"
 
 #: templates/panel/addDist.html:146
-#, fuzzy
-#| msgid "Please fill the form."
 msgid "Please fill the form"
 msgstr "Lütfen formu doldurun"
 
@@ -256,18 +288,9 @@ msgstr "Kapak"
 msgid "Your cover image should at least 300px x 300px"
 msgstr "Kapak görüntünüz en az 300px x 300px olmalı"
 
-#: templates/panel/addDist.html:177 templates/panel/addDist.html:178
-#: templates/panel/contentID.html:31 templates/panel/distribution.html:31
-#: templates/secret/anno.html:32 templates/secret/contentID.html:25
-#: templates/secret/distribution.html:31
-msgid "Title"
-msgstr "Başlık"
-
 #: templates/panel/addDist.html:181
-#, fuzzy
-#| msgid "First Name"
 msgid "Artist Name"
-msgstr "İsim"
+msgstr "Sanatçı İsmi"
 
 #: templates/panel/addDist.html:183 templates/panel/addDist.html:186
 #: templates/panel/addDist.html:189
@@ -303,7 +326,8 @@ msgid "Previous"
 msgstr "Geri"
 
 #: templates/panel/addDist.html:225 templates/panel/addDist.html:276
-#: templates/panel/distribution.html:35 templates/secret/distribution.html:35
+#: templates/panel/distribution.html:35 templates/secret/distDetail.html:38
+#: templates/secret/distribution.html:35
 msgid "Platforms"
 msgstr "Platformlar"
 
@@ -311,7 +335,7 @@ msgstr "Platformlar"
 msgid "Select which platforms that you want to release"
 msgstr "Yayınlanmasını istediğiniz platformları seçiniz"
 
-#: templates/panel/addDist.html:272
+#: templates/panel/addDist.html:272 templates/secret/distDetail.html:34
 msgid "Label"
 msgstr "Plak Şirketi"
 
@@ -339,13 +363,10 @@ msgstr ""
 "Lütfen belirli bir URL ekleyerek istekte bulunun. Biz bunun için YouTube ile "
 "iletişim halinde olacağız"
 
-#: templates/panel/contentID.html:32 templates/secret/contentID.html:26
-msgid "URL"
-msgstr "URL"
-
 #: templates/panel/contentID.html:33 templates/panel/distribution.html:36
 #: templates/panel/statement.html:27 templates/secret/contentID.html:27
-#: templates/secret/distribution.html:36 templates/secret/statement.html:35
+#: templates/secret/distDetail.html:44 templates/secret/distribution.html:36
+#: templates/secret/statement.html:35
 msgid "Status"
 msgstr "Durumlar"
 
@@ -356,11 +377,6 @@ msgstr "Content ID İsteği"
 #: templates/panel/contentIDRequest.html:26
 msgid "Send Request"
 msgstr "İstek Yolla"
-
-#: templates/panel/distribution.html:15 templates/secret/distDetail.html:15
-#: templates/secret/distribution.html:15
-msgid "New Distribution"
-msgstr "Yeni Dağıtım"
 
 #: templates/panel/distribution.html:25
 msgid "Your Distributions"
@@ -393,17 +409,6 @@ msgstr ""
 "Tüm beyanlar burada. Tüm dağıtımlarınızın beyanlarını görebilirsiniz.Bunlar "
 "3 aylık rapor olacaktır"
 
-#: templates/panel/statement.html:25 templates/panel/statistic.html:29
-#: templates/secret/statement.html:33
-msgid "Revenue"
-msgstr "Kazanç"
-
-#: templates/panel/statement.html:26 templates/panel/statistic.html:30
-#: templates/secret/anno.html:35 templates/secret/statement.html:34
-#: templates/secret/statistic.html:39
-msgid "Date"
-msgstr "Tarih"
-
 #: templates/panel/statement.html:36 templates/secret/statement.html:45
 msgid "Statement Received"
 msgstr "Beyan Ulaştı"
@@ -424,18 +429,22 @@ msgstr ""
 "görebilirsiniz"
 
 #: templates/panel/statistic.html:25 templates/secret/statistic.html:34
+#: templates/secret/statisticAdd.html:39
 msgid "Track"
 msgstr "Parça"
 
 #: templates/panel/statistic.html:26 templates/secret/statistic.html:35
+#: templates/secret/statisticAdd.html:46
 msgid "Platform"
 msgstr ""
 
 #: templates/panel/statistic.html:27 templates/secret/statistic.html:36
+#: templates/secret/statisticAdd.html:53
 msgid "Stream"
 msgstr "Sürdürme"
 
 #: templates/panel/statistic.html:28 templates/secret/statistic.html:37
+#: templates/secret/statisticAdd.html:59
 msgid "Download"
 msgstr "İndirme"
 
@@ -455,10 +464,6 @@ msgstr ""
 "Tüm duyurular burada. Bu, kullanıcı ve etiket panellerindeki kontrol "
 "panelinde görülebilir. Göz atın ve ekleyin veya silin"
 
-#: templates/secret/anno.html:33
-msgid "Content"
-msgstr "İçerik"
-
 #: templates/secret/anno.html:34
 msgid "Creator"
 msgstr "Yaratıcı"
@@ -469,10 +474,28 @@ msgid "Ops"
 msgstr "İşl"
 
 #: templates/secret/anno.html:76 templates/secret/contentID.html:75
-#: templates/secret/distribution.html:94 templates/secret/genre.html:109
-#: templates/secret/statement.html:83 templates/secret/statistic.html:84
-msgid "Please confirm that you want to delete everything."
-msgstr ""
+#: templates/secret/distribution.html:94 templates/secret/statement.html:83
+#: templates/secret/statistic.html:84
+msgid "Please confirm that you want to delete this."
+msgstr "Lütfen bunu silmek istediğinizi onaylayın"
+
+#: templates/secret/anno.html:77 templates/secret/contentID.html:76
+#: templates/secret/distribution.html:95 templates/secret/statement.html:84
+#: templates/secret/statistic.html:85
+msgid "Please Confirm"
+msgstr "Lütfen Onaylayın"
+
+#: templates/secret/anno.html:81 templates/secret/contentID.html:80
+#: templates/secret/distribution.html:99 templates/secret/statement.html:88
+#: templates/secret/statistic.html:89
+msgid "YES"
+msgstr "EVET"
+
+#: templates/secret/anno.html:82 templates/secret/contentID.html:81
+#: templates/secret/distribution.html:100 templates/secret/statement.html:89
+#: templates/secret/statistic.html:90
+msgid "NO"
+msgstr "HAYIR"
 
 #: templates/secret/annoAdd.html:19
 msgid "Add Annoucement"
@@ -484,6 +507,11 @@ msgid ""
 "panels"
 msgstr ""
 "Lütfen formu doldurun. Bu açıklama kullanıcı ve etiket panellerinde görünecek"
+
+#: templates/secret/annoAdd.html:25 templates/secret/statementAdd.html:25
+#: templates/secret/statisticAdd.html:76
+msgid "Create"
+msgstr "Oluştur"
 
 #: templates/secret/contentID.html:11
 msgid "ContentID Requests"
@@ -501,6 +529,14 @@ msgstr ""
 "Tüm kaldırma istekleri burada. Kontrol edin ve işlem düğmeleriyle onaylayın "
 "veya reddedin"
 
+#: templates/secret/distDetail.html:25
+msgid "Distribution Detail"
+msgstr "Dağıtım Ayrıntıları"
+
+#: templates/secret/distDetail.html:36
+msgid "Release"
+msgstr "Yayınlanma"
+
 #: templates/secret/distDetail.html:66
 msgid "Name"
 msgstr "İsim"
@@ -512,6 +548,14 @@ msgstr "Boyut"
 #: templates/secret/distDetail.html:68
 msgid "Op"
 msgstr "İşl"
+
+#: templates/secret/distDetail.html:98
+msgid "Confirm"
+msgstr "Onayla"
+
+#: templates/secret/distDetail.html:113
+msgid "Reject"
+msgstr "Reddet"
 
 #: templates/secret/distribution.html:25
 msgid "All Distributions"
@@ -541,6 +585,10 @@ msgstr "Tür Adı"
 #: templates/secret/genre.html:43
 msgid "Remove Genre"
 msgstr "Türü Kaldır"
+
+#: templates/secret/genre.html:109
+msgid "Please confirm that you want to delete everything."
+msgstr ""
 
 #: templates/secret/genreAdd.html:44
 msgid "Create Category"
@@ -627,8 +675,3 @@ msgstr "Görevli"
 #: templates/secret/user.html:36
 msgid "SuperUser"
 msgstr "Yönetici"
-
-#, fuzzy
-#~| msgid "Title"
-#~ msgid "title"
-#~ msgstr "Başlık"
