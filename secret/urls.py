@@ -34,7 +34,7 @@ urlpatterns = [
          name='statistic-delete'),
     path('statement/', views.statementsAdminListView.as_view(),
          name='statement'),
-    path('statement/add/', views.statementAdminCreateView.as_view(),
+    path('statement/add/', views.statementAdminAddFunctionView,
          name='statement-add'),
     path('statement/update/<pk>/',
          views.statementAdminUpdateView.as_view(),

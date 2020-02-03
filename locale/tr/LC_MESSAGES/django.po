@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 13:23+0000\n"
+"POT-Creation-Date: 2020-02-03 15:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Burak Karahan <burak.karahan@mail.ru>\n"
 "Language-Team: tr_TR <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: api/views.py:24 api/views.py:44
+#: api/views.py:24 api/views.py:44 api/views.py:135
 msgid "Album does not exist"
 msgstr "Album bulunamadı"
 
@@ -26,7 +26,7 @@ msgstr "Album bulunamadı"
 msgid "Please select an option"
 msgstr "Lütfen seçin"
 
-#: panel/forms.py:11 secret/forms.py:114 templates/panel/addDist.html:177
+#: panel/forms.py:11 secret/forms.py:96 templates/panel/addDist.html:177
 #: templates/panel/addDist.html:178 templates/panel/contentID.html:31
 #: templates/panel/distribution.html:31 templates/secret/anno.html:32
 #: templates/secret/contentID.html:25 templates/secret/distribution.html:31
@@ -63,7 +63,7 @@ msgid "Rejected"
 msgstr "Reddedildi"
 
 #: panel/models.py:129 panel/models.py:135 panel/models.py:174
-#: panel/models.py:239
+#: panel/models.py:239 templates/secret/statementAdd.html:29
 msgid "Please Select..."
 msgstr "Lütfen seçin..."
 
@@ -75,9 +75,10 @@ msgstr "Tekli"
 msgid "EP"
 msgstr "EP"
 
-#: panel/models.py:134 secret/forms.py:99 templates/panel/addDist.html:371
+#: panel/models.py:134 templates/panel/addDist.html:371
 #: templates/panel/statement.html:24 templates/panel/statistic.html:24
-#: templates/secret/statement.html:32 templates/secret/statistic.html:33
+#: templates/secret/statement.html:32 templates/secret/statementAdd.html:25
+#: templates/secret/statistic.html:33
 msgid "Album"
 msgstr "Albüm"
 
@@ -114,20 +115,7 @@ msgstr "Şifre onayı"
 msgid "Enter the same password as before, for verification."
 msgstr "Doğrulama için öncekiyle aynı şifreyi girin."
 
-#: secret/forms.py:100 templates/panel/statement.html:25
-#: templates/panel/statistic.html:29 templates/secret/statement.html:33
-#: templates/secret/statisticAdd.html:65
-msgid "Revenue"
-msgstr "Kazanç"
-
-#: secret/forms.py:101 templates/panel/statement.html:26
-#: templates/panel/statistic.html:30 templates/secret/anno.html:35
-#: templates/secret/statement.html:34 templates/secret/statistic.html:39
-#: templates/secret/statisticAdd.html:71
-msgid "Date"
-msgstr "Tarih"
-
-#: secret/forms.py:115 templates/secret/anno.html:33
+#: secret/forms.py:97 templates/secret/anno.html:33
 msgid "Content"
 msgstr "İçerik"
 
@@ -255,7 +243,7 @@ msgstr "Dosyayı buraya bırakın"
 msgid "More files"
 msgstr "Daha dosya"
 
-#: templates/panel/addDist.html:117
+#: templates/panel/addDist.html:117 templates/secret/statementAdd.html:64
 msgid "Split Pay"
 msgstr "Bölünmüş Pay"
 
@@ -393,7 +381,7 @@ msgid "Artist"
 msgstr "Sanatçı"
 
 #: templates/panel/statement.html:11 templates/secret/statement.html:11
-#: templates/secret/statementAdd.html:12
+#: templates/secret/statementAdd.html:11
 msgid "Statements"
 msgstr "Beyanlar"
 
@@ -408,6 +396,19 @@ msgid ""
 msgstr ""
 "Tüm beyanlar burada. Tüm dağıtımlarınızın beyanlarını görebilirsiniz.Bunlar "
 "3 aylık rapor olacaktır"
+
+#: templates/panel/statement.html:25 templates/panel/statistic.html:29
+#: templates/secret/statement.html:33 templates/secret/statementAdd.html:39
+#: templates/secret/statementAdd.html:70 templates/secret/statisticAdd.html:65
+msgid "Revenue"
+msgstr "Kazanç"
+
+#: templates/panel/statement.html:26 templates/panel/statistic.html:30
+#: templates/secret/anno.html:35 templates/secret/statement.html:34
+#: templates/secret/statementAdd.html:48 templates/secret/statistic.html:39
+#: templates/secret/statisticAdd.html:71
+msgid "Date"
+msgstr "Tarih"
 
 #: templates/panel/statement.html:36 templates/secret/statement.html:45
 msgid "Statement Received"
@@ -508,7 +509,7 @@ msgid ""
 msgstr ""
 "Lütfen formu doldurun. Bu açıklama kullanıcı ve etiket panellerinde görünecek"
 
-#: templates/secret/annoAdd.html:25 templates/secret/statementAdd.html:25
+#: templates/secret/annoAdd.html:25 templates/secret/statementAdd.html:76
 #: templates/secret/statisticAdd.html:76
 msgid "Create"
 msgstr "Oluştur"
@@ -598,13 +599,32 @@ msgstr "Kategori Oluştur"
 msgid "New Statement"
 msgstr "Yeni Beyan"
 
-#: templates/secret/statementAdd.html:19
+#: templates/secret/statementAdd.html:18
 msgid "Add Statement"
 msgstr "Beyan Ekle"
 
-#: templates/secret/statementAdd.html:20
+#: templates/secret/statementAdd.html:19
 msgid "Please fill the form. These statements will be 3-months period"
 msgstr "Lütfen formu doldurun. Bu beyanlar 3 aylık bir dönem olacaktır"
+
+#: templates/secret/statementAdd.html:56 templates/secret/statementAdd.html:60
+msgid "Warning"
+msgstr "Uyarı"
+
+#: templates/secret/statementAdd.html:56
+msgid ""
+"This album contains split paid tracks. You need to type the earnings of "
+"these tracks separately. Date will be the same and revenue will be calculated"
+msgstr ""
+"Bu albümde bölünmüş paylı şarkılar var. Bu parçaların kazançlarını ayrı ayrı "
+"yazmanız gerekiyor. Tarih albümdeki ile aynı sayılacak ve gelir "
+"hesaplanacaktır"
+
+#: templates/secret/statementAdd.html:60
+msgid ""
+"This album contains 1 track and it's only track is split pay. You do not "
+"need to type the earnings of this track separately"
+msgstr "Bu albüm sadece 1 şarkı içeriyor ve o tek şarkı da bölünmüş pay içeriyor. Bu parçaların kazançlarını ayrı ayrı yazmanıza gerek yok"
 
 #: templates/secret/statistic.html:16 templates/secret/statisticAdd.html:19
 msgid "New Statistic"

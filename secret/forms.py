@@ -88,24 +88,6 @@ class UserCreationForm(forms.ModelForm):
         return user
 
 
-class StatementForm(forms.ModelForm):
-    class Meta:
-        model = Statement
-        fields = ['album', 'revenue', 'date']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'})
-        }
-        labels = {
-            'album': _('Album'),
-            'revenue': _('Revenue'),
-            'date': _('Date')
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['album'].widget.attrs['class'] = 'custom-select'
-
-
 class AnnoForm(forms.ModelForm):
     class Meta:
         model = Announcement

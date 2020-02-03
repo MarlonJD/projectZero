@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import UserCreationForm, StatementForm, AnnoForm
+from .forms import UserCreationForm, AnnoForm
 from panel.models import (Album, ContentID, Statistic, Track, Platform,
                           Statement, Genre, Announcement)
 
@@ -166,13 +166,21 @@ class statementsAdminListView(AdminStaffRequiredMixin, ListView):
         return Statement.objects.all().order_by('album')
 
 
-class statementAdminCreateView(AdminStaffRequiredMixin, CreateView):
+def statementAdminAddFunctionView(request):
     """
-    Admin, Statement Add Page Class View: CreateView
+    Admin Statement Add Function View
     """
-    form_class = StatementForm
-    success_url = reverse_lazy('secret:statement')
-    template_name = 'secret/statementAdd.html'
+    if request.method == 'POST':
+        albumObj = Album.objects.get(pk=request.POST['album'])
+
+        Statement.objects.create(album=albumObj,
+                                 revenue=request.POST['revenue'],
+                                 date=request.POST['date'])
+        return redirect(reverse_lazy('secret:statement'))
+    else:
+        albums = Album.objects.all()
+        params = {'albums': albums}
+        return render(request, 'secret/statementAdd.html', params)
 
 
 class statementAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
