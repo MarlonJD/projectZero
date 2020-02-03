@@ -120,3 +120,25 @@ def removeGenre(request):
         return JsonResponse({
             "FailedCode": 1,
             "Message": "Dont know why but there is a issue"}, status=418)
+
+
+class getSplitPays(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        albumPK = self.kwargs['aid']
+
+        # Sanity Check
+        try:
+            albumObj = Album.objects.get(pk=albumPK)
+        except Album.DoesNotExist:
+            return Response({'Error': _('Album does not exist')}, status=404)
+
+        trackCount = Track.objects.filter(tracks_set=albumObj).count()
+        splitPays = Track.objects.filter(tracks_set=albumObj).exclude(
+            OtherArtists__isnull=True)
+        jResponse = []
+        for t in splitPays:
+            jResponse.append({'count': trackCount, 'id': t.pk, 'name': t.name})
+
+        return Response(jResponse)

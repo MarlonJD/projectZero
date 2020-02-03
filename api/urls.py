@@ -13,4 +13,5 @@ urlpatterns = [
     path('removeGenre/',
          views.removeGenre,
          name="removeGenre"),
+    path('getSplitPays/<aid>/', views.getSplitPays.as_view()),
 ]
