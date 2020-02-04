@@ -4,11 +4,13 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.admin.views.decorators import staff_member_required
 from .forms import UserCreationForm, AnnoForm
 from panel.models import (Album, ContentID, Statistic, Track, Platform,
-                          Statement, Genre, Announcement)
+                          Statement, SplitStatement, Genre, Announcement)
 
 
 class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -55,13 +57,11 @@ class distributionAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
     success_url = reverse_lazy('secret:distribution')
 
 
-class distributionAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
-    """
-    Admin, Distribution Delete Function, Class View: DeleteView
-    """
-    model = Album
-    template_name = 'secret/distribution.html'
-    success_url = reverse_lazy('secret:distribution')
+def distributionAdminDeleteView(request, pk):
+    o = Album.objects.get(pk=pk)
+    o.delete()
+
+    return JsonResponse({'pk': pk, 'deleted': True})
 
 
 class userAdminListView(AdminStaffRequiredMixin, ListView):
@@ -101,13 +101,12 @@ class contentIDAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
     success_url = reverse_lazy('secret:contentID')
 
 
-class contentIDAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
-    """
-    Admin, ContentID Delete Function, Class View: DeleteView
-    """
-    model = ContentID
-    template_name = 'secret/contentID.html'
-    success_url = reverse_lazy('secret:contentID')
+@staff_member_required
+def contentIDAdminDeleteView(request, pk):
+    o = ContentID.objects.get(pk=pk)
+    o.delete()
+
+    return JsonResponse({'pk': pk, 'deleted': True})
 
 
 class statisticAdminListView(AdminStaffRequiredMixin, ListView):
@@ -122,6 +121,7 @@ class statisticAdminListView(AdminStaffRequiredMixin, ListView):
         return Statistic.objects.all().order_by('album')
 
 
+@staff_member_required
 def statisticAdminAddFunctionView(request):
     """
     Admin Statistic Add Function View
@@ -145,13 +145,12 @@ def statisticAdminAddFunctionView(request):
         return render(request, 'secret/statisticAdd.html', params)
 
 
-class statisticAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
-    """
-    Admin, Statement Delete Function, Class View: DeleteView
-    """
-    model = Statistic
-    template_name = 'secret/statistic.html'
-    success_url = reverse_lazy('secret:statistic')
+@staff_member_required
+def statisticAdminDeleteView(request, pk):
+    o = Statistic.objects.get(pk=pk)
+    o.delete()
+
+    return JsonResponse({'pk': pk, 'deleted': True})
 
 
 class statementsAdminListView(AdminStaffRequiredMixin, ListView):
@@ -166,6 +165,7 @@ class statementsAdminListView(AdminStaffRequiredMixin, ListView):
         return Statement.objects.all().order_by('album')
 
 
+@staff_member_required
 def statementAdminAddFunctionView(request):
     """
     Admin Statement Add Function View
@@ -173,9 +173,23 @@ def statementAdminAddFunctionView(request):
     if request.method == 'POST':
         albumObj = Album.objects.get(pk=request.POST['album'])
 
-        Statement.objects.create(album=albumObj,
-                                 revenue=request.POST['revenue'],
-                                 date=request.POST['date'])
+        # Create Statement Model Object
+        stateObj = Statement.objects.create(album=albumObj,
+                                            revenue=request.POST['revenue'],
+                                            date=request.POST['date'])
+
+        # Split Pays
+        attributes = {}
+        for k in request.POST.keys():
+            if 'attr' in k:
+                s = k.split('attr_')[1]
+                attributes[s] = request.POST[k]
+        for i in attributes:
+            t = Track.objects.get(pk=i)
+            sp = SplitStatement.objects.create(track=t, revenue=attributes[i],
+                                               date=request.POST['date'])
+            stateObj.splits.add(sp)
+
         return redirect(reverse_lazy('secret:statement'))
     else:
         albums = Album.objects.all()
@@ -193,13 +207,11 @@ class statementAdminUpdateView(AdminStaffRequiredMixin, UpdateView):
     success_url = reverse_lazy('secret:statement')
 
 
-class statementAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
-    """
-    Admin, Statement Delete Function, Class View: DeleteView
-    """
-    model = Statement
-    template_name = 'secret/contentID.html'
-    success_url = reverse_lazy('secret:statement')
+@staff_member_required
+def statementAdminDeleteView(request, pk):
+    o = Statement.objects.get(pk=pk)
+    o.delete()
+    return JsonResponse({'pk': pk, 'deleted': True})
 
 
 class genreAdminListView(AdminStaffRequiredMixin, ListView):
@@ -243,10 +255,9 @@ class annoAdminCreateView(LoginRequiredMixin, CreateView):
         return super(annoAdminCreateView, self).form_valid(form)
 
 
-class annoAdminDeleteView(AdminStaffRequiredMixin, DeleteView):
-    """
-    Admin, Statement Delete Function, Class View: DeleteView
-    """
-    model = Announcement
-    template_name = 'secret/anno.html'
-    success_url = reverse_lazy('secret:anno')
+@staff_member_required
+def annoAdminDeleteView(request, pk):
+    o = Announcement.objects.get(pk=pk)
+    o.delete()
+
+    return JsonResponse({'pk': pk, 'deleted': True})

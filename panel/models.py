@@ -214,6 +214,35 @@ class Statistic(models.Model):
 
 
 '''
+----------------------
+     SplitStatement
+----------------------
+'''
+
+
+class SplitStatement(models.Model):
+    """SplitStatement is SplitStatement(track=Track, revenue=Integer,
+                                        date=DateField)
+    interp. SplitStatement is track's seperated revenue report
+            track is Track
+            revenue is Track's this month's revenue
+            date is which month is revenue has come
+    """
+    class statusType(models.IntegerChoices):
+        PENDING = 0, _('Pending')
+        RECIEVED = 1, _('Statement Recieved')
+        __empty__ = _('Please Select...')
+
+    track = models.ForeignKey(Track, on_delete=models.CASCADE)
+    revenue = models.IntegerField()
+    date = models.DateField()
+    status = models.IntegerField(choices=statusType.choices, default=0)
+
+    def __str__(self):
+        return self.track.name
+
+
+'''
 -----------------------
      Statement Model
 -----------------------
@@ -226,8 +255,7 @@ class Statistic(models.Model):
 #         revenue is Album's this month's revenue
 #         date is which month is renevue has come
 class Statement(models.Model):
-    '''
-    Statement is Statement(album=Album, revenue=Integer, date=DateField)
+    '''Statement is Statement(album=Album, revenue=Integer, date=DateField)
      interp. Statement is Album's revenue report
              album is Album
              revenue is Album's this month's revenue
@@ -241,6 +269,7 @@ class Statement(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     revenue = models.IntegerField()
     date = models.DateField()
+    splits = models.ManyToManyField(SplitStatement, related_name='split_set')
     status = models.IntegerField(choices=statusType.choices, default=0)
 
     def __str__(self):
