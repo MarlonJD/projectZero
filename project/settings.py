@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'whitenoise.runserver_nostatic',
     'crispy_forms',
+    'mathfilters',
     'rest_framework',
     'api.apps.ApiConfig',
     'panel.apps.PanelConfig',
