@@ -64,14 +64,22 @@
    :LOGBOOK:
    CLOCK: [2020-02-04 Sal 17:08]--[2020-02-04 Sal 19:09] => 2:01
    :END:
-* TODO Label Panel[1/4] 
+* TODO Label Panel[5/8] 
 ** DONE Add Label Panel
    CLOSED: [2020-02-02 Paz 17:46] SCHEDULED: <2020-02-02 Paz>
    :LOGBOOK:
    CLOCK: [2020-02-02 Paz 17:26]--[2020-02-02 Paz 17:46] =>  0:20
    :END:
-** TODO Unlock Artist Name
-** TODO Fix Label Name
+** DONE Add Dist Page
+   CLOSED: [2020-02-06 Prş 16:32] SCHEDULED: <2020-02-06 Prş>
+** DONE Add Content ID Page
+   CLOSED: [2020-02-06 Prş 16:32]
+** TODO Add Statistic Page
+** TODO Add Statements Page
+** DONE Unlock Artist Name
+   CLOSED: [2020-02-06 Prş 16:33]
+** DONE Fix Label Name
+   CLOSED: [2020-02-06 Prş 16:33]
 ** TODO Add Dashboard
 * TODO General[5/5]
 ** DONE Remove Track Number

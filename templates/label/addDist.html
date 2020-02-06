@@ -1,4 +1,4 @@
-{% extends 'panel/layout.html' %}
+{% extends 'label/layout.html' %}
 {% load i18n %}
 {% load static %}
 {% block title %}Home{% endblock %}
@@ -179,16 +179,7 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaTitle">{% trans "Artist Name" %}</label>
-				    {% if user.is_superuser or user.is_stuff %}
-				        <b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}"></b-form-input>
-				    {% else %}
-				    {% if artist.name %}
-					<b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}" readonly></b-form-input>
-					<small id="artistHelp" class="form-text text-muted">{% trans "Your artist name is default now. You cannot change" %}</small>
-                                    {% else %}
-                                        <b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}"></b-form-input>
-			            {% endif %}
-			            {% endif %}
+				    <b-form-input v-model="media.artist" placeholder="{% trans "Main Artist Name" %}"></b-form-input>
 				</div>
 				<div class="col-12 mb-4">		    
 				    <label for="id_genre">{% trans 'Genre' %}:</label>
@@ -204,7 +195,8 @@
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaRecordLabel">{% trans "Record Label" %}</label>
-				    <b-form-input v-model="media.recordLabel" :placeholder="selectText + '{% trans "Record Label" %}'"></b-form-input>
+				    <b-form-input v-if="media.recordLabel" v-model="media.recordLabel" :placeholder="selectText + '{% trans "Record Label" %}'" disabled></b-form-input>
+				    <b-form-input v-else v-model="media.recordLabel" :placeholder="selectText + '{% trans "Record Label" %}'"></b-form-input>
 				</div>
 				<div class="form-group col-6">
 				    <label for="mediaReleaseDate">{% trans "Release Date" %} <i id="input-date-help" class="mdi mdi-help"></i></label>
@@ -359,7 +351,7 @@
 	     artist: '{% if not user.is_superuser or user.is_stuff %}{% if artist %}{{ artist.name|escapejs }}{% endif %}{% endif %}',
 	     genre: null,
 	     subGenre: null,
-	     recordLabel: null,
+	     recordLabel: '{{ recordLabel.name|escapejs }}',
 	     releaseDate: new Date('{{ 2weekLater|date:"Y-m-d" }}'),
 	     platforms:  [],
 	     featuredPlatforms: [],
@@ -488,7 +480,7 @@
 	     formData0.append('platforms', JSON.stringify(this.media.platforms));
 
 	     axios
-		 .post('/distribution/add/',
+		 .post('/en/label/distribution/add/',
 		       formData0,
 		       {
 			   headers: {
@@ -497,7 +489,7 @@
 		       })
 		 .then(function(){
 		     console.log('SUCCESS!!');
-		     window.location.href = '{% url 'panel:distribution' %}'
+		     window.location.href = '{% url 'label:distribution' %}'
 		 })
 		 .catch(function(){
 		     console.log('FAILURE!!');

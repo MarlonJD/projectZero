@@ -139,16 +139,23 @@ class Album(models.Model):
                                     related_name='tracks_set')
     title = models.CharField(max_length=150)
     artwork = models.ImageField(upload_to='media/cover')
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE, null=True)
+    artist_label = models.CharField(max_length=150, null=True)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
-    recordLabel = models.CharField(max_length=150)
+    recordLabel = models.ForeignKey(RecordLabel, on_delete=models.CASCADE,
+                                    null=True)
     releaseDate = models.DateField()
     platforms = models.ManyToManyField(Platform,
                                        related_name='platforms_set')
     status = models.IntegerField(choices=statusType.choices, default=0)
 
     def __str__(self):
-        return self.title + ' by ' + self.artist.name
+        try:
+            return self.title + ' by ' + self.artist.name
+        except AttributeError:
+            return (self.title +
+                    ' by ' + self.artist_label + ' (' +
+                    self.recordLabel.name + ')')
 
 
 '''
