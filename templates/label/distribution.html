@@ -1,0 +1,71 @@
+{% extends 'label/layout.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-home"></i>
+        </span> {% trans 'Distribution' %}</h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'label:addDist' %}"><i class="mdi mdi-plus"></i>{% trans "New Distribution" %}</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{% trans "Your Distributions" %}</h4>
+                <p class="card-description"> {% trans "All distirbutions is here. You want to create new, please click the button." %}
+                </p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Title" %}</th>
+                            <th>{% trans "Artist" %}</th>
+                            <th>{% trans "Record Label" %}</th>
+                            <th>{% trans "Release Date" %}</th>
+			    <th>{% trans "Platforms" %}</th>
+			    <th>{% trans "Status" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			{% for dist in object_list %}
+			<tr>
+			    <td>{{ dist.title }}</td>
+			    <td>{{ dist.artist_label }}</td>
+			    <td>{{ dist.recordLabel }}</td>
+			    <td>{{ dist.releaseDate }}</td>
+			    <td>{% for platform in dist.platforms.all %}<span class="badge badge-secondary ml-1">{{ platform }}</span>{% endfor %}</td>
+			    <td>{% if dist.status == 0 %}
+				<label class="badge badge-warning">{% trans "Pending" %}</label>
+				{% endif %}
+				{% if dist.status == 1 %}
+				<label class="badge badge-info">{% trans "in Progress" %}</label>
+				{% endif %}
+				{% if dist.status == 2 %}
+				<label class="badge badge-success">{% trans "Confirmed" %}</label>
+				{% endif %}
+				{% if dist.status == 3 %}
+				<label class="badge badge-danger">{% trans "Rejected" %}</label>
+				{% endif %}
+			    </td>
+			</tr>
+			{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

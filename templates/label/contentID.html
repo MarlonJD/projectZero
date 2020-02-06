@@ -1,0 +1,53 @@
+{% extends 'label/layout.html' %}
+{% load i18n %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-home"></i>
+        </span> {% trans 'Distribution' %}</h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a class="btn btn-sm btn-gradient-primary" href="{% url 'label:contentIDRequest' %}"><i class="mdi mdi-plus"></i>{% trans "New Request" %}</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{% trans "Your ContentID requests" %}</h4>
+                <p class="card-description"> {% trans "Please send request for removal request spesific url. We'll keep in touch with YouTube for this." %}
+                </p>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Title" %}</th>
+                            <th>{% trans "URL" %}</th>
+                            <th>{% trans "Status" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			{% for content in object_list %}
+			<tr>
+			    <td>{{ content.title }}</td>
+			    <td>{{ content.url }}</td>
+			    <td>{% if content.status == 0 %}<label class="badge badge-danger">{% trans "Pending" %}</label>{% endif %}{% if content.status == 1 %}<label class="badge badge-success">{% trans "Removal Request Received" %}</label>{% endif %}</td>
+			</tr>
+			{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

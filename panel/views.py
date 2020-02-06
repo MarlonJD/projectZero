@@ -13,7 +13,7 @@ from django.views.generic import CreateView, ListView, TemplateView
 from .forms import ContentIDForm
 from .models import (Album, Artist, Track, Platform,
                      ContentID, Statistic, Statement,
-                     OtherArtist, Genre)
+                     OtherArtist, Genre, RecordLabel)
 import json
 
 
@@ -84,7 +84,6 @@ def addDistUserView(request):
         title = request.POST['title']
         artist = request.POST['artist']
         genre = request.POST['genre']
-        recordLabel = request.POST['recordLabel']
         releaseDate = request.POST['releaseDate']
         cover = request.FILES['cover']
         tracks = json.loads(request.POST['tracks'])
@@ -95,12 +94,15 @@ def addDistUserView(request):
 
         genreObj = Genre.objects.get(pk=genre)
 
+        recordObj = RecordLabel.objects.get_or_create(
+            name=request.POST['recordLabel'])
+
         albumObj = Album.objects.create(mediaType=mType,
                                         title=title,
                                         artwork=cover,
                                         artist=artistObj,
                                         genre=genreObj,
-                                        recordLabel=recordLabel,
+                                        recordLabel=recordObj,
                                         releaseDate=releaseDate)
 
         for val in platforms:
